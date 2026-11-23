@@ -41,9 +41,9 @@ export const researchThemes: ResearchTheme[] = [
     relatedExhibitions: ['peoples-buildings-2024'],
     materials: ['Architectural drawings (Poona PWD records)', 'Project files', 'Administrative reports', 'Building specifications and estimates', 'PWD books and journals'],
     gallery: [
-      { src: 'research/construction-01.jpg', alt: 'Historical PWD architectural drawing', caption: 'PWD architectural drawing', orientation: 'landscape' },
-      { src: 'research/construction-02.jpg', alt: 'Page from a PWD project file', caption: 'Project file', orientation: 'portrait' },
-      { src: 'research/construction-03.jpg', alt: 'Historical building photograph', caption: 'Historical photograph', orientation: 'landscape' },
+      { src: 'architecture/hero-drawing.jpg', alt: 'Ink drawing of the south and north elevations of the Jacob Sassoon Hospital, Poona', caption: 'Jacob Sassoon Hospital, Poona — south and north elevations', orientation: 'landscape' },
+      { src: 'research/construction-02.jpg', alt: 'Title page reading “Public Works Department, Bombay. Poona District Specifications. Poona: Printed at the Yeravda Prison Press, 1919”', caption: 'Poona District Specifications, Public Works Department, Bombay (Poona: Yeravda Prison Press, 1919) — title page', orientation: 'portrait' },
+      { src: 'research/construction-03.jpg', alt: 'Stone façade of the Central Building, Pune, with arched upper verandahs, round openings, paired columns, and government office signboards', caption: 'Central Building, Dr. Annie Besant Road, Pune — present-day view', orientation: 'landscape' },
     ],
   },
   {

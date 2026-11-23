@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kairavi-maniar.github.io/sitemap-index.xml
+Sitemap: https://kairavimaniar24-lgtm.github.io/sitemap-index.xml

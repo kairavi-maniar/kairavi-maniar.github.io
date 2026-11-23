@@ -21,7 +21,7 @@ drop the image (renamed as below) → **Commit changes**. The site updates in ab
 
 | Folder | File name | What it should show |
 | --- | --- | --- |
-| `architecture/` | `hero-drawing.jpg` | Home page hero: a strong historical drawing or archival photograph (portrait shape works best) |
+| `architecture/` | `hero-drawing.jpg` | ✅ Added (Sassoon Hospital elevation) — Home page hero: a strong historical drawing or archival photograph (portrait shape works best) |
 | `profile/` | `portrait.jpg` | ✅ Added — Kairavi's portrait (About page) |
 | `archival-research/` | `beyond-cover.jpg` | ✅ Added — Cover: Beyond the Archive's Walls (CEPT talk photo) |
 | `eap1678/` | `cover.jpg` | Cover: EAP1678 — drawings/records being prepared for digitisation |
@@ -101,9 +101,9 @@ drop the image (renamed as below) → **Commit changes**. The site updates in ab
 
 | File name | Theme | What it should show |
 | --- | --- | --- |
-| `construction-01.jpg` | 01 Construction History | A PWD architectural drawing |
-| `construction-02.jpg` | 01 Construction History | A project file page |
-| `construction-03.jpg` | 01 Construction History | A historical building photograph |
+| `construction-01.jpg` | 01 Construction History | Not needed — the Sassoon Hospital drawing is used here |
+| `construction-02.jpg` | 01 Construction History | ✅ Added — Poona District Specifications, 1919 |
+| `construction-03.jpg` | 01 Construction History | ✅ Added — Central Building, Pune |
 | `materials-01.jpg` | 02 Materials | Early twentieth-century concrete construction |
 | `materials-02.jpg` | 02 Materials | A page from a technical journal |
 | `concrete-01.jpg` | Project 05 | Archival material on concrete |

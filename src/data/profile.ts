@@ -11,7 +11,7 @@ export const site = {
   /** The same description split into parts (used in the header and footer). */
   titleParts: ['Architectural Historian', 'Researcher', 'Project Coordinator, EAP1678 Digitization Project'],
   location: 'Pune, India',
-  url: 'https://kairavi-maniar.github.io',
+  url: 'https://kairavimaniar24-lgtm.github.io',
   description:
     'Kairavi Maniar is an architectural historian and researcher working on construction history, colonial public works, architectural archives, and digital heritage in India.',
 
@@ -40,7 +40,7 @@ export const contact = {
   googleScholar: '', // e.g. 'https://scholar.google.com/citations?user=XXXX'
   orcid: '', // e.g. 'https://orcid.org/0000-0000-0000-0000'
   academia: '', // optional, e.g. Academia.edu profile
-  github: 'https://github.com/kairavi-maniar',
+  github: 'https://github.com/kairavimaniar24-lgtm',
   /** Relevant project websites, e.g. the EAP1678 page on the British Library site. */
   projectLinks: [
     // { label: 'EAP1678 — British Library Endangered Archives Programme', url: 'https://eap.bl.uk/project/EAP1678' },
@@ -63,10 +63,9 @@ export const hero = {
     'I am an architectural historian and researcher interested in construction history, colonial public works, architectural archives, and digital heritage. My work explores the material, institutional, and documentary dimensions of architectural production in India.',
   image: {
     src: 'architecture/hero-drawing.jpg',
-    alt: 'Historical architectural drawing from the Poona Public Works Department records',
-    caption: 'Hero image — a historical architectural drawing or archival photograph',
-    credit: 'Credit line to be added',
-    orientation: 'portrait' as const,
+    alt: 'Ink drawing of the south and north elevations of the Jacob Sassoon Hospital, Poona: a long arcaded building with Gothic arches and towers, with a references stamp and a Consulting Architect to Government, Bombay stamp',
+    caption: 'Jacob Sassoon Hospital, Poona — south and north elevations. Stamp of the Consulting Architect to Government, Bombay.',
+    orientation: 'landscape' as const,
   },
 };
 
