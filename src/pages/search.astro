@@ -1,0 +1,100 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import { projects } from '../data/projects';
+import { researchThemes } from '../data/research';
+import { writing, writingTypes } from '../data/writing';
+import { exhibitions } from '../data/exhibitions';
+import { experience } from '../data/experience';
+import { achievements } from '../data/achievements';
+import { navigation } from '../data/navigation';
+import { url } from '../lib/url';
+
+// Lightweight client-side index, built at compile time from the data files.
+const index = [
+  ...navigation.map((n) => ({ t: n.full ?? n.label, k: 'Page', u: url(n.href), s: '', x: '' })),
+  ...projects.map((p) => ({
+    t: p.subtitle ? `${p.title}: ${p.subtitle}` : p.title,
+    k: `Project ${p.number}`,
+    u: url(`/projects/${p.slug}/`),
+    s: p.summary,
+    x: [p.categories.join(' '), p.reference ?? '', p.institutions.join(' '), p.context.join(' '), p.methodology.join(' ')].join(' '),
+  })),
+  ...researchThemes.map((t) => ({ t: t.title, k: `Research theme ${t.number}`, u: url(`/research/${t.slug}/`), s: t.short, x: t.topics.join(' ') + ' ' + t.essay.join(' ') })),
+  ...writing.map((w) => ({ t: w.title, k: writingTypes.find((x) => x.id === w.type)?.label ?? '', u: url(`/writing/#${w.id}`), s: [w.event, w.date].filter(Boolean).join(' · '), x: [w.description, w.venue ?? '', w.author ?? ''].join(' ') })),
+  ...exhibitions.map((e) => ({ t: e.title, k: 'Exhibition', u: url(`/exhibitions/#${e.id}`), s: `${e.dates} · ${e.place}`, x: e.overview + ' ' + e.collaborators.join(' ') })),
+  ...experience.map((e) => ({ t: `${e.role} — ${e.organisation}`, k: 'Experience', u: url(e.kind === 'teaching' || e.kind === 'guidance' ? `/teaching/#${e.id}` : '/about/#trajectory'), s: `${e.dates} · ${e.place}`, x: e.description })),
+  ...achievements.map((a) => ({ t: a.title, k: 'Achievement', u: url(`/achievements/#${a.group}`), s: a.date, x: a.detail })),
+];
+const json = JSON.stringify(index).replace(/</g, '\\u003c');
+---
+
+<MainLayout title="Search" description="Search projects, research themes, writing, and exhibitions.">
+  <PageHead eyebrow="Search" title="Search the portfolio" trail={[{ label: 'Search' }]} />
+  <section class="section" style="padding-top: 48px">
+    <div class="wrap" style="max-width: 900px">
+      <form class="search-box" role="search" action="" onsubmit="return false">
+        <label for="q" class="sr-only">Search projects, themes, and publications</label>
+        <input id="q" name="q" type="search" placeholder="e.g. concrete, Dublin Core, Pune…" autocomplete="off" />
+      </form>
+      <p class="meta" aria-live="polite" id="search-status" style="margin-top: 12px">Type at least two characters.</p>
+      <ul class="results" id="results"></ul>
+      <noscript><p>Search requires JavaScript. Please use the navigation above.</p></noscript>
+    </div>
+  </section>
+  <script is:inline type="application/json" id="search-index" set:html={json}></script>
+</MainLayout>
+
+<script>
+  type Row = { t: string; k: string; u: string; s: string; x: string };
+  const data: Row[] = JSON.parse(document.getElementById('search-index')?.textContent ?? '[]');
+  const input = document.getElementById('q') as HTMLInputElement;
+  const list = document.getElementById('results')!;
+  const status = document.getElementById('search-status')!;
+  const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const rows = data.map((r) => ({ ...r, hay: norm(`${r.t} ${r.k} ${r.s} ${r.x}`), title: norm(r.t) }));
+
+  const run = () => {
+    const q = norm(input.value.trim());
+    list.textContent = '';
+    if (q.length < 2) {
+      status.textContent = 'Type at least two characters.';
+      return;
+    }
+    const terms = q.split(/\s+/);
+    const hits = rows
+      .filter((r) => terms.every((t) => r.hay.includes(t)))
+      .map((r) => ({ r, score: terms.reduce((n, t) => n + (r.title.includes(t) ? 3 : 1), 0) }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 30);
+    status.textContent = `${hits.length} ${hits.length === 1 ? 'result' : 'results'}.`;
+    for (const { r } of hits) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = r.u;
+      const k = document.createElement('span');
+      k.className = 'eyebrow';
+      k.style.marginBottom = '4px';
+      k.textContent = r.k;
+      const t = document.createElement('span');
+      t.className = 'r-title';
+      t.textContent = r.t;
+      a.append(k, t);
+      if (r.s) {
+        const s = document.createElement('span');
+        s.className = 'r-snip';
+        s.textContent = r.s;
+        a.append(s);
+      }
+      li.append(a);
+      list.append(li);
+    }
+  };
+  input.addEventListener('input', run);
+  const initial = new URLSearchParams(location.search).get('q');
+  if (initial) {
+    input.value = initial;
+    run();
+  }
+  input.focus();
+</script>

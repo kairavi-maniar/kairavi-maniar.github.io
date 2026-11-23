@@ -1,0 +1,123 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Figure from '../components/Figure.astro';
+import Timeline from '../components/Timeline.astro';
+import EditorialNote from '../components/EditorialNote.astro';
+import ProjectNavigation from '../components/ProjectNavigation.astro';
+import { site, researchProfile, philosophy, methods, portrait } from '../data/profile';
+import { education } from '../data/education';
+import { url } from '../lib/url';
+
+const sub = [
+  { id: 'profile', label: '5.1 Profile' },
+  { id: 'education', label: '5.2 Academic background' },
+  { id: 'trajectory', label: '5.3 Professional trajectory' },
+  { id: 'philosophy', label: '5.4 Research philosophy' },
+  { id: 'methods', label: '5.5 Working methods' },
+  { id: 'more', label: 'Further sections' },
+];
+---
+
+<MainLayout title="About" description={`About ${site.name}: ${researchProfile.cvSummary}`} type="profile">
+  <PageHead eyebrow="About" title="Architectural historian and researcher" lede={site.titleParts.join(' · ') + ' — ' + site.location} trail={[{ label: 'About' }]} />
+  <ProjectNavigation items={sub} label="About sections" />
+
+  <section class="section" id="profile" aria-labelledby="profile-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">5.1</span>
+        <h2 id="profile-h">Profile</h2>
+        <div style="max-width: 280px; margin-top: 24px">
+          <Figure image={portrait} zoom={false} sizes="280px" />
+        </div>
+      </div>
+      <div class="stack">
+        {researchProfile.paragraphs.map((p, i) => <p class={i === 0 ? 'lede' : ''} style={i === 0 ? 'color: var(--ink)' : ''}>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="education" aria-labelledby="edu-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">5.2</span>
+        <h2 id="edu-h">Academic background</h2>
+      </div>
+      <div class="grid grid--2">
+        {
+          education.map((e) => (
+            <article class="card">
+              <span class="num">{e.dates}</span>
+              <h3>{e.degree}</h3>
+              <p>{e.institution}</p>
+              <span class="meta">{e.place}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="trajectory" aria-labelledby="traj-h">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 32px">
+        <div class="split__label">
+          <span class="eyebrow">5.3</span>
+          <h2 id="traj-h">Professional trajectory</h2>
+        </div>
+        <p class="lede">Four broad phases, from architectural education and practice to archival research and project coordination. Select an entry to read more; use the filters to focus on one kind of work.</p>
+      </div>
+      <Timeline />
+    </div>
+  </section>
+
+  <section class="section section--panel" id="philosophy" aria-labelledby="phil-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">5.4</span>
+        <h2 id="phil-h">Research philosophy</h2>
+      </div>
+      <div class="stack">
+        {philosophy.paragraphs.map((p) => <p class="lede" style="color: var(--ink)">{p}</p>)}
+        {philosophy.isDraft && <EditorialNote><p>This section is a draft based only on the research profile. Please revise it in your own words (src/data/profile.ts → philosophy).</p></EditorialNote>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="methods" aria-labelledby="methods-h">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 40px">
+        <div class="split__label">
+          <span class="eyebrow">5.5</span>
+          <h2 id="methods-h">Working methods</h2>
+        </div>
+        <p class="lede">Methods drawn from architectural history, archival practice, and digital heritage.</p>
+      </div>
+      <ol class="methods">
+        {
+          methods.map((m, i) => (
+            <li>
+              <span class="mono">M{String(i + 1).padStart(2, '0')}</span>
+              <h3>{m.title}</h3>
+              <p>{m.detail}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--tight" id="more" aria-labelledby="more-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <h2 id="more-h" style="font-size: 1.8rem">Further sections</h2>
+      </div>
+      <div class="grid grid--3">
+        <a class="card" href={url('/exhibitions/')}><h3>Exhibitions & Curatorial Work</h3><p>Two exhibitions in Pune and Jaigarh, 2024.</p></a>
+        <a class="card" href={url('/teaching/')}><h3>Teaching & Academic Engagement</h3><p>Teaching at CEPT University and research guidance at SEDA.</p></a>
+        <a class="card" href={url('/achievements/')}><h3>Achievements</h3><p>Awards, grants, and professional development.</p></a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,160 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Figure from '../components/Figure.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ResearchThemeCard from '../components/ResearchThemeCard.astro';
+import { site, hero, researchProfile } from '../data/profile';
+import { projects } from '../data/projects';
+import { researchThemes } from '../data/research';
+import { writing } from '../data/writing';
+import { phases } from '../data/timeline';
+import { url } from '../lib/url';
+
+const featured = projects.filter((p) => p.featured).slice(0, 4);
+const presentations = writing.filter((w) => w.type === 'presentation').sort((a, b) => b.sortDate.localeCompare(a.sortDate));
+const journey = [
+  { year: '2015', text: 'Begins the Bachelor of Architecture at SEDA, Navrachna University, Vadodara.' },
+  { year: '2020', text: 'Completes the B.Arch. and joins architectural and landscape practice.' },
+  { year: '2022', text: 'Begins the Master’s in Architectural History and Research at CEPT University.' },
+  { year: '2023', text: 'Research Assistant to Prof. Gauri Bharat; teaching at CEPT University.' },
+  { year: '2024', text: 'Completes the Master’s; curates exhibitions in Pune and Jaigarh.' },
+  { year: '2025', text: 'Presents at ETH Zurich; Co-Applicant and Project Coordinator, EAP1678.' },
+  { year: '2026', text: 'Dissertation Guide, Bachelor of Architecture, SEDA.' },
+];
+---
+
+<MainLayout description={site.description} type="profile">
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div>
+        <span class="eyebrow">{site.titleParts.join(' · ')}</span>
+        <h1>{hero.heading}</h1>
+        <p class="lede">{hero.paragraph}</p>
+        <div class="actions">
+          <a class="btn" href={url('/research/')}>Explore My Research</a>
+          <a class="btn btn--ghost" href={url('/projects/')}>Selected Projects</a>
+          <a class="btn btn--ghost" href={url('/cv/')}>View CV</a>
+        </div>
+      </div>
+      <div>
+        <Figure image={hero.image} eager sizes="(min-width: 960px) 40vw, 100vw" />
+      </div>
+    </div>
+  </section>
+
+  <!-- A. Introduction -->
+  <section class="section" aria-labelledby="intro-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">A — Introduction</span>
+        <h2 id="intro-h">Profile</h2>
+      </div>
+      <div class="stack">
+        <p class="lede" style="color: var(--ink)">{researchProfile.short}</p>
+        <a class="arrow-link" href={url('/about/')}>About Kairavi</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- B. Current research -->
+  <section class="section section--panel" aria-labelledby="research-h">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 48px">
+        <div class="split__label">
+          <span class="eyebrow">B — Current research</span>
+          <h2 id="research-h">Research themes</h2>
+        </div>
+        <p class="lede">
+          Colonial construction cultures · Public Works Department records · Architectural and institutional histories · Archival habitats · Digital heritage and mapping.
+        </p>
+      </div>
+      <div class="grid grid--3">
+        {researchThemes.map((t) => <ResearchThemeCard theme={t} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- C. Selected projects -->
+  <section class="section" aria-labelledby="projects-h">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 48px">
+        <div class="split__label">
+          <span class="eyebrow">C — Selected projects</span>
+          <h2 id="projects-h">Projects</h2>
+        </div>
+        <div>
+          <p class="lede">Archival research, digitisation, mapping, and public engagement around the records of colonial and post-colonial public works.</p>
+          <a class="arrow-link" href={url('/projects/')}>All projects</a>
+        </div>
+      </div>
+      <div class="grid grid--2" style="gap: 56px 40px">
+        {featured.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- D. Selected academic work -->
+  <section class="section" aria-labelledby="writing-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">D — Selected academic work</span>
+        <h2 id="writing-h">Invited presentations</h2>
+        <a class="arrow-link" href={url('/writing/')}>Writing & presentations</a>
+      </div>
+      <ol class="index-list">
+        {
+          presentations.map((w, i) => (
+            <li>
+              <span class="mono">0{i + 1}</span>
+              <div>
+                <a href={url(`/writing/#${w.id}`)} style="text-decoration: none">
+                  <h3 style="font-size: clamp(1.3rem, 2vw, 1.6rem); margin-bottom: 0.3em">{w.title}</h3>
+                </a>
+                <p class="meta" style="margin: 0">
+                  {w.event}
+                  {w.venue ? ` · ${w.venue}` : ''} · {w.date} · {w.format}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- E. Professional journey -->
+  <section class="section section--panel" aria-labelledby="journey-h">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 40px">
+        <div class="split__label">
+          <span class="eyebrow">E — Professional journey</span>
+          <h2 id="journey-h">2015 – Present</h2>
+        </div>
+        <div>
+          <p class="lede">From architectural education and practice to architectural history, teaching, and archival project coordination.</p>
+          <a class="arrow-link" href={url('/about/#trajectory')}>Full timeline</a>
+        </div>
+      </div>
+      <ol class="index-list">
+        {
+          journey.map((j) => (
+            <li style="grid-template-columns: 5em minmax(0, 1fr)">
+              <span class="num" style="font-size: 1.8rem">{j.year}</span>
+              <p style="margin: 0; padding-top: 0.3em">{j.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <ul class="mini-timeline" style="margin-top: 48px" aria-label="Phases">
+        {
+          phases.map((ph) => (
+            <li>
+              <span class="mono" style="color: var(--terracotta-text)">Phase {ph.number} · {ph.dates}</span>
+              <h3>{ph.title}</h3>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</MainLayout>

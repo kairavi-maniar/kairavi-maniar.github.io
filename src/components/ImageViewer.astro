@@ -1,0 +1,75 @@
+---
+/**
+ * Full-screen image viewer. Any link with `data-viewer="<group>"` opens here.
+ * Keyboard: ← / → for previous / next, Esc to close. Without JavaScript the
+ * links simply open the full-size image.
+ */
+---
+
+<dialog class="viewer" aria-label="Image viewer" data-viewer-dialog>
+  <div class="viewer__bar">
+    <span class="viewer__count" data-viewer-count aria-live="polite"></span>
+    <button type="button" data-viewer-close>Close ✕</button>
+  </div>
+  <div class="viewer__stage">
+    <button type="button" data-viewer-prev aria-label="Previous image">←</button>
+    <div class="viewer__img-wrap"><img alt="" data-viewer-img /></div>
+    <button type="button" data-viewer-next aria-label="Next image">→</button>
+  </div>
+  <p class="viewer__caption" data-viewer-caption></p>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-viewer-dialog]');
+  if (dialog && typeof dialog.showModal === 'function') {
+    const img = dialog.querySelector<HTMLImageElement>('[data-viewer-img]')!;
+    const cap = dialog.querySelector<HTMLElement>('[data-viewer-caption]')!;
+    const count = dialog.querySelector<HTMLElement>('[data-viewer-count]')!;
+    const prev = dialog.querySelector<HTMLButtonElement>('[data-viewer-prev]')!;
+    const next = dialog.querySelector<HTMLButtonElement>('[data-viewer-next]')!;
+    let items: HTMLAnchorElement[] = [];
+    let index = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (i: number) => {
+      index = (i + items.length) % items.length;
+      const a = items[index];
+      img.src = a.href;
+      img.alt = a.dataset.alt ?? '';
+      cap.textContent = '';
+      cap.append(document.createTextNode(a.dataset.caption ?? ''));
+      if (a.dataset.credit) {
+        const c = document.createElement('span');
+        c.className = 'plate__credit';
+        c.textContent = a.dataset.credit;
+        cap.append(c);
+      }
+      count.textContent = items.length > 1 ? `${index + 1} / ${items.length}` : '';
+      prev.hidden = next.hidden = items.length < 2;
+    };
+
+    document.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-viewer]');
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      items = Array.from(document.querySelectorAll<HTMLAnchorElement>(`a[data-viewer="${a.dataset.viewer}"]`));
+      opener = a;
+      show(items.indexOf(a));
+      dialog.showModal();
+    });
+    prev.addEventListener('click', () => show(index - 1));
+    next.addEventListener('click', () => show(index + 1));
+    dialog.querySelector('[data-viewer-close]')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      img.removeAttribute('src');
+      opener?.focus();
+    });
+  }
+</script>

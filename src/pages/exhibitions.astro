@@ -1,0 +1,68 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Figure from '../components/Figure.astro';
+import Gallery from '../components/Gallery.astro';
+import { exhibitions } from '../data/exhibitions';
+import { getTheme, resolve } from '../lib/lookup';
+import { url } from '../lib/url';
+
+const sorted = [...exhibitions].sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+---
+
+<MainLayout title="Exhibitions & Curatorial Work" description="Exhibitions curated by Kairavi Maniar: People’s Buildings (Pune, 2024) and Jaigarh (Jaipur, 2024).">
+  <PageHead
+    eyebrow="Exhibitions & Curatorial Work"
+    title="Exhibitions and curatorial work"
+    lede="Exhibitions translating archival and architectural research for public audiences, curated with institutional partners."
+    trail={[{ label: 'Exhibitions' }]}
+  />
+
+  {
+    sorted.map((e) => {
+      const themes = resolve(e.themes, getTheme);
+      return (
+        <article class="section" id={e.id} aria-labelledby={`${e.id}-h`}>
+          <div class="wrap">
+            <div class="split">
+              <div class="split__label">
+                <span class="eyebrow">Catalogue {e.number}</span>
+                <span class="num">{e.dates.split(' ').slice(-1)}</span>
+              </div>
+              <div class="stack">
+                <h2 id={`${e.id}-h`}>{e.title}</h2>
+                <dl class="record">
+                  <div><dt>Dates</dt><dd>{e.dates}</dd></div>
+                  <div><dt>Place</dt><dd>{e.place}</dd></div>
+                  <div><dt>Role</dt><dd>{e.role}</dd></div>
+                  <div><dt>Collaboration</dt><dd>{e.collaborators.join('; ')}</dd></div>
+                  {e.context && <div><dt>Context</dt><dd>{e.context}</dd></div>}
+                </dl>
+                <p class="lede" style="color: var(--ink)">{e.overview}</p>
+                {themes.length > 0 && (
+                  <p class="meta">
+                    Research themes:{' '}
+                    {themes.map((t, i) => (
+                      <>
+                        <a href={url(`/research/${t.slug}/`)}>{t.title}</a>
+                        {i < themes.length - 1 ? ' · ' : ''}
+                      </>
+                    ))}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div style="margin: 48px 0 40px">
+              <Figure image={e.cover} group={e.id} sizes="(min-width: 1240px) 1160px, 100vw" wide />
+            </div>
+            <Gallery items={e.gallery} group={e.id} label={`${e.title} — images`} />
+            <div class="keyline" style="margin-top: 40px">
+              <span class="eyebrow">Documentation spaces</span>
+              <ul class="tags">{e.documentation.map((d) => <li>{d}</li>)}</ul>
+            </div>
+          </div>
+        </article>
+      );
+    })
+  }
+</MainLayout>

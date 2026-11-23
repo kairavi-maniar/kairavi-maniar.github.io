@@ -1,0 +1,58 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHead from '../../components/PageHead.astro';
+import { researchThemes } from '../../data/research';
+import { getProject, resolve } from '../../lib/lookup';
+import { url } from '../../lib/url';
+---
+
+<MainLayout title="Research" description="Five research themes: construction history and colonial public works; materials and modernisation; architectural archives; digital heritage; mapping and spatial histories.">
+  <PageHead
+    eyebrow="Research"
+    title="Research themes"
+    lede="My research connects architectural history, construction history, and archival practice. It is organised here into five themes, each with its own introduction, questions, related projects, writing, and archival material."
+    trail={[{ label: 'Research' }]}
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="plain-list" style="list-style: none">
+        {
+          researchThemes.map((t) => {
+            const projects = resolve(t.relatedProjects, getProject);
+            return (
+              <li style="padding: 40px 0">
+                <div class="split">
+                  <div class="split__label" style="position: static">
+                    <span class="num">{t.number}</span>
+                  </div>
+                  <div class="stack">
+                    <a href={url(`/research/${t.slug}/`)} style="text-decoration: none">
+                      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem)">{t.title}</h2>
+                    </a>
+                    <p class="lede">{t.short}</p>
+                    <ul class="tags" aria-label="Topics">
+                      {t.topics.slice(0, 6).map((x) => <li>{x}</li>)}
+                    </ul>
+                    {projects.length > 0 && (
+                      <p class="meta">
+                        Projects:{' '}
+                        {projects.map((p, i) => (
+                          <>
+                            <a href={url(`/projects/${p.slug}/`)}>{p.shortTitle}</a>
+                            {i < projects.length - 1 ? ' · ' : ''}
+                          </>
+                        ))}
+                      </p>
+                    )}
+                    <a class="arrow-link" href={url(`/research/${t.slug}/`)}>Read theme {t.number}</a>
+                  </div>
+                </div>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </section>
+</MainLayout>

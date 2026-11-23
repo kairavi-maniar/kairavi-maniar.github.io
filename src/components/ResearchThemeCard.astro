@@ -1,0 +1,19 @@
+---
+import type { ResearchTheme } from '../data/types';
+import { url } from '../lib/url';
+interface Props {
+  theme: ResearchTheme;
+  compact?: boolean;
+}
+const { theme: t, compact = false } = Astro.props;
+---
+
+<a class="card" href={url(`/research/${t.slug}/`)}>
+  <div class="card__top">
+    <span class="num" aria-hidden="true">{t.number}</span>
+    <span class="meta">Research theme</span>
+  </div>
+  <h3>{t.title}</h3>
+  {!compact && <p>{t.short}</p>}
+  <span class="arrow-link" aria-hidden="true">Explore theme</span>
+</a>

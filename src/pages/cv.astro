@@ -1,0 +1,62 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import EditorialNote from '../components/EditorialNote.astro';
+import { site, contact, cv } from '../data/profile';
+import { cvSections } from '../data/cv';
+import { url } from '../lib/url';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Only show the download button if the PDF actually exists in /public.
+const pdfExists = fs.existsSync(path.join(process.cwd(), 'public', cv.pdf.replace(/^\//, '')));
+const showPdf = cv.showDownload && pdfExists;
+---
+
+<MainLayout title="CV" description={`Curriculum vitae of ${site.name}, ${site.title}.`}>
+  <PageHead eyebrow="Curriculum Vitae" title={site.name} lede={site.title} trail={[{ label: 'CV' }]}>
+    <div class="actions no-print" style="margin-top: 0">
+      <a class="btn" href="#cv-online">View CV Online</a>
+      {showPdf && <a class="btn btn--ghost" href={url(cv.pdf)} download>Download CV PDF</a>}
+      <button class="btn btn--ghost" type="button" data-print>Print</button>
+    </div>
+  </PageHead>
+
+  <section class="section" id="cv-online" style="padding-top: 48px">
+    <div class="wrap">
+      <article class="cv" aria-label="Curriculum vitae">
+        <p class="meta">
+          {site.location}
+          {contact.showEmail && contact.email && <> · <a href={`mailto:${contact.email}`}>{contact.email}</a></>}
+          {contact.showPhone && contact.phone && <> · {contact.phone}</>}
+        </p>
+        {
+          cvSections.map((s) => (
+            <section aria-labelledby={`cv-${s.id}`}>
+              <h2 id={`cv-${s.id}`}>{s.title}</h2>
+              {s.text && <p>{s.text}</p>}
+              {s.items?.map((it) => (
+                <div class="cv-item">
+                  <div>
+                    <div class="cv-item__title">{it.title}</div>
+                    {it.sub && <div class="cv-item__sub">{it.sub}</div>}
+                  </div>
+                  <div>
+                    {it.date && <div class="cv-item__date">{it.date}</div>}
+                    {it.place && <div class="cv-item__place">{it.place}</div>}
+                  </div>
+                  {it.desc && <p class="cv-item__desc">{it.desc}</p>}
+                  {it.flag && <div style="grid-column: 1 / -1"><EditorialNote label="Needs confirmation"><p>{it.flag}</p></EditorialNote></div>}
+                </div>
+              ))}
+            </section>
+          ))
+        }
+      </article>
+    </div>
+  </section>
+</MainLayout>
+
+<script>
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+</script>

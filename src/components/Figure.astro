@@ -1,0 +1,73 @@
+---
+/**
+ * A single image ("plate") with caption, credit and archival reference.
+ * - If the image file exists in src/assets/images/, it is shown, optimised,
+ *   at its natural proportions (never cropped) and opens in the full viewer.
+ * - Otherwise a neutral, labelled placeholder shows where to add it.
+ */
+import { Image, getImage } from 'astro:assets';
+import type { ImageItem } from '../data/types';
+import { findImage } from '../lib/images';
+
+interface Props {
+  image: ImageItem;
+  sizes?: string;
+  /** Load immediately (use for the first, above-the-fold image). */
+  eager?: boolean;
+  /** Fixed-ratio frame with the whole image contained inside. */
+  fill?: boolean;
+  /** Open in the full-screen viewer when clicked. */
+  zoom?: boolean;
+  /** Gallery group name for previous/next in the viewer. */
+  group?: string;
+  hideCaption?: boolean;
+  /** Use a wide (16:9) frame for the placeholder, e.g. full-width covers. */
+  wide?: boolean;
+}
+
+const { image, sizes = '(min-width: 1000px) 33vw, (min-width: 600px) 50vw, 100vw', eager = false, fill = false, zoom = true, group = 'page', hideCaption = false, wide = false } = Astro.props;
+const meta = findImage(image.src);
+const ratioClass = wide ? 'ratio-wide' : `ratio-${image.orientation ?? 'landscape'}`;
+const full = meta ? await getImage({ src: meta, width: Math.min(meta.width, 2400), format: 'webp' }) : undefined;
+---
+
+<figure class:list={['plate', ratioClass, { 'plate--fill': fill && meta }]}>
+  {
+    meta ? (
+      zoom && full ? (
+        <a
+          class="plate__frame"
+          href={full.src}
+          data-viewer={group}
+          data-caption={image.caption}
+          data-credit={image.credit ?? ''}
+          data-alt={image.alt}
+          aria-label={`View full image: ${image.alt}`}
+        >
+          <Image src={meta} alt={image.alt} widths={[480, 800, 1200, 1600].filter((w) => w <= meta.width)} sizes={sizes} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} />
+        </a>
+      ) : (
+        <div class="plate__frame">
+          <Image src={meta} alt={image.alt} widths={[480, 800, 1200, 1600].filter((w) => w <= meta.width)} sizes={sizes} loading={eager ? 'eager' : 'lazy'} />
+        </div>
+      )
+    ) : (
+      <div class="placeholder" role="img" aria-label={`Image to be added: ${image.caption}`}>
+        <div class="placeholder__inner">
+          <span class="placeholder__label">Plate · awaiting image</span>
+          <span class="placeholder__title">{image.caption}</span>
+          <span class="placeholder__path">src/assets/images/{image.src}</span>
+        </div>
+      </div>
+    )
+  }
+  {
+    !hideCaption && (meta || image.credit || image.ref) && (
+      <figcaption>
+        {meta && <span class="plate__caption">{image.caption}</span>}
+        {image.ref && <span class="plate__ref">{image.ref}</span>}
+        {meta && image.credit && <span class="plate__credit">{image.credit}</span>}
+      </figcaption>
+    )
+  }
+</figure>

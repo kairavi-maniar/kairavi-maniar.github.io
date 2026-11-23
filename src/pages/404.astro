@@ -1,0 +1,14 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import { url } from '../lib/url';
+---
+
+<MainLayout title="Page not found" description="The page you were looking for could not be found.">
+  <PageHead eyebrow="Error 404 · Record not found" title="This record is missing from the catalogue." lede="The page may have moved, or the link may be incomplete.">
+    <div class="actions">
+      <a class="btn" href={url('/')}>Return home</a>
+      <a class="btn btn--ghost" href={url('/search/')}>Search the site</a>
+    </div>
+  </PageHead>
+</MainLayout>

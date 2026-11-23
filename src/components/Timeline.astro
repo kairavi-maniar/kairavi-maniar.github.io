@@ -1,0 +1,92 @@
+---
+/**
+ * Interactive professional & academic timeline, grouped by phase.
+ * Each entry expands for details; chips filter by kind.
+ */
+import { experience, kindLabels } from '../data/experience';
+import { education } from '../data/education';
+import { phases } from '../data/timeline';
+import { url } from '../lib/url';
+
+type Entry = { id: string; title: string; org: string; place: string; dates: string; start: string; kind: string; desc?: string; project?: string };
+
+const entries: Entry[] = [
+  ...experience.map((e) => ({ id: e.id, title: e.role, org: e.organisation, place: e.place, dates: e.dates, start: e.start, kind: e.kind, desc: e.description, project: e.project, phase: e.phase })),
+  ...education.map((e) => ({ id: e.id, title: e.degree, org: e.institution, place: e.place, dates: e.dates, start: e.start, kind: 'education', phase: e.phase })),
+] as (Entry & { phase: string })[];
+
+const kinds = [
+  { id: 'all', label: 'All' },
+  { id: 'education', label: 'Education' },
+  { id: 'practice', label: kindLabels.practice },
+  { id: 'teaching', label: kindLabels.teaching },
+  { id: 'research', label: 'Research & coordination' },
+];
+const filterKind = (k: string) => (k === 'coordination' || k === 'guidance' ? 'research' : k);
+---
+
+<div data-timeline>
+  <div class="timeline-filters" role="group" aria-label="Filter timeline">
+    {kinds.map((k, i) => <button type="button" class="chip" data-filter={k.id} aria-pressed={i === 0 ? 'true' : 'false'}>{k.label}</button>)}
+  </div>
+  {
+    phases.map((ph) => {
+      const items = (entries as (Entry & { phase: string })[])
+        .filter((e) => e.phase === ph.id)
+        .sort((a, b) => b.start.localeCompare(a.start));
+      return (
+        <section class="phase" aria-labelledby={`phase-${ph.id}`}>
+          <div class="phase__head">
+            <span class="phase__roman">Phase {ph.number}</span>
+            <h3 id={`phase-${ph.id}`}>{ph.title}</h3>
+            <span class="mono">{ph.dates}</span>
+            <p class="muted" style="margin-top: 12px; font-size: 0.95rem">{ph.intro}</p>
+          </div>
+          <ol class="tl">
+            {items.map((e) => (
+              <li class="tl__item" data-kind={e.kind === 'education' ? 'education' : undefined} data-filter-kind={filterKind(e.kind)}>
+                <details>
+                  <summary>
+                    <span class="mono" style="color: var(--terracotta-text)">{e.dates}</span>
+                    <span class="tl__role">{e.title}</span>
+                    <span class="muted" style="font-size: 0.95rem">{e.org} · {e.place}</span>
+                  </summary>
+                  <div class="tl__body">
+                    {e.desc && <p>{e.desc}</p>}
+                    {e.kind === 'education' && <p>{e.title}, {e.org}.</p>}
+                    {e.project && <a class="arrow-link" href={url(`/projects/${e.project}/`)}>Related project</a>}
+                  </div>
+                </details>
+              </li>
+            ))}
+          </ol>
+        </section>
+      );
+    })
+  }
+  <p class="meta" aria-live="polite" data-timeline-status></p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-timeline]').forEach((root) => {
+    const chips = root.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const items = root.querySelectorAll<HTMLElement>('[data-filter-kind]');
+    const status = root.querySelector('[data-timeline-status]');
+    chips.forEach((chip) =>
+      chip.addEventListener('click', () => {
+        const f = chip.dataset.filter;
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        let n = 0;
+        items.forEach((it) => {
+          const show = f === 'all' || it.dataset.filterKind === f;
+          it.hidden = !show;
+          if (show) n++;
+        });
+        root.querySelectorAll<HTMLElement>('.phase').forEach((ph) => {
+          ph.hidden = !ph.querySelector('[data-filter-kind]:not([hidden])');
+        });
+        if (status) status.textContent = `Showing ${n} ${n === 1 ? 'entry' : 'entries'}.`;
+      }),
+    );
+  });
+</script>

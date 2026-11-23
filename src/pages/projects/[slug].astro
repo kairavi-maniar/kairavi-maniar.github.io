@@ -1,0 +1,260 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProjectNavigation from '../../components/ProjectNavigation.astro';
+import Figure from '../../components/Figure.astro';
+import Gallery from '../../components/Gallery.astro';
+import EditorialNote from '../../components/EditorialNote.astro';
+import WorkflowDiagram from '../../components/WorkflowDiagram.astro';
+import { projects } from '../../data/projects';
+import { getTheme, getWriting, getExhibition, resolve } from '../../lib/lookup';
+import { writingTypes } from '../../data/writing';
+import { url } from '../../lib/url';
+import type { Project } from '../../data/types';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project: p } = Astro.props as { project: Project };
+const themes = resolve(p.themes, getTheme);
+const writing = resolve(p.relatedWriting, getWriting);
+const exhibitions = resolve(p.relatedExhibitions, getExhibition);
+const idx = projects.findIndex((x) => x.slug === p.slug);
+const prev = projects[idx - 1];
+const next = projects[idx + 1];
+
+const sub = [
+  { id: 'overview', label: 'Overview' },
+  p.context.length ? { id: 'context', label: 'Context' } : null,
+  p.questions.length ? { id: 'questions', label: 'Research Questions' } : null,
+  p.methodology.length ? { id: 'methodology', label: 'Methodology' } : null,
+  ...p.sections.map((s) => ({ id: s.id, label: s.title })),
+  { id: 'role', label: 'Role' },
+  { id: 'outcomes', label: 'Outcomes' },
+  p.gallery.length ? { id: 'gallery', label: 'Gallery' } : null,
+  { id: 'related', label: 'Related Work' },
+].filter(Boolean) as { id: string; label: string }[];
+
+const fullTitle = p.subtitle ? `${p.title}: ${p.subtitle}` : p.title;
+---
+
+<MainLayout title={fullTitle} description={p.summary} type="article">
+  <header class="page-head" id="overview">
+    <div class="wrap">
+      <Breadcrumbs trail={[{ label: 'Projects', href: '/projects/' }, { label: p.shortTitle }]} />
+      <div class="page-head__grid" style="align-items: start">
+        <div>
+          <span class="eyebrow">Project {p.number}{p.reference ? ` · ${p.reference}` : ''}</span>
+          <h1>{p.title}</h1>
+          {p.subtitle && <p class="serif-italic" style="font-size: clamp(1.4rem, 2.6vw, 2rem); line-height: 1.25; color: var(--ink-2); max-width: 30ch">{p.subtitle}</p>}
+          <p class="lede" style="margin-top: 1.5rem">{p.summary}</p>
+        </div>
+        <dl class="record record--card" aria-label="Project record">
+          <div><dt>Project no.</dt><dd>{p.number}</dd></div>
+          {p.reference && <div><dt>Reference</dt><dd>{p.reference}</dd></div>}
+          <div><dt>Duration</dt><dd>{p.duration}</dd></div>
+          <div><dt>Institutions</dt><dd>{p.institutions.join('; ')}</dd></div>
+          <div><dt>Role</dt><dd>{p.role}</dd></div>
+          <div><dt>Categories</dt><dd>{p.categories.join(', ')}</dd></div>
+        </dl>
+      </div>
+      <div style="margin-top: 48px">
+        <Figure image={p.cover} eager sizes="(min-width: 1240px) 1160px, 100vw" wide />
+      </div>
+      {p.todo.length > 0 && <EditorialNote items={p.todo} />}
+    </div>
+  </header>
+
+  <ProjectNavigation items={sub} label="Case study sections" />
+
+  <div class="wrap">
+    {
+      p.context.length > 0 && (
+        <section class="case-section split" id="context" aria-labelledby="context-h">
+          <div class="split__label"><span class="eyebrow">Background</span><h2 id="context-h">Context</h2></div>
+          <div class="stack">{p.context.map((c) => <p>{c}</p>)}</div>
+        </section>
+      )
+    }
+
+    {
+      p.questions.length > 0 && (
+        <section class="case-section split" id="questions" aria-labelledby="q-h">
+          <div class="split__label"><span class="eyebrow">Inquiry</span><h2 id="q-h">Research questions</h2></div>
+          <div>
+            <ol class="index-list">
+              {p.questions.map((q, i) => (
+                <li>
+                  <span class="mono">Q{i + 1}</span>
+                  <p class="serif-italic" style="font-size: 1.35rem; line-height: 1.35; margin: 0">{q}</p>
+                </li>
+              ))}
+            </ol>
+            <EditorialNote><p>Draft questions framed from the project description — please revise.</p></EditorialNote>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      p.methodology.length > 0 && (
+        <section class="case-section split" id="methodology" aria-labelledby="m-h">
+          <div class="split__label"><span class="eyebrow">Method</span><h2 id="m-h">Methodology</h2></div>
+          <ol class="index-list">
+            {p.methodology.map((m, i) => (
+              <li>
+                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <p style="margin: 0">{m}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    {
+      p.sections.map((s) => (
+        <section class="case-section" id={s.id} aria-labelledby={`${s.id}-h`}>
+          <div class="split">
+            <div class="split__label">
+              {s.number && <span class="num">{s.number}</span>}
+              <h2 id={`${s.id}-h`} style={s.number ? 'margin-top: 12px' : ''}>{s.title}</h2>
+            </div>
+            <div class="case-body">
+              {s.body?.map((b) => <p>{b}</p>)}
+              {s.stats && (
+                <dl class="stats" style={`--cols: ${s.stats.length}`}>
+                  {s.stats.map((st) => (
+                    <div><dt>{st.label}</dt><dd>{st.value}</dd></div>
+                  ))}
+                </dl>
+              )}
+              {s.list && (
+                <ol class="index-list">
+                  {s.list.map((l, i) => (
+                    <li>
+                      <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                      <p style="margin: 0">{l}</p>
+                    </li>
+                  ))}
+                </ol>
+              )}
+              {s.fields && (
+                <dl class="record">
+                  {s.fields.map((f) => (
+                    <div><dt>{f.label}</dt><dd>{f.value}</dd></div>
+                  ))}
+                </dl>
+              )}
+              {s.record && (
+                <dl class="record record--card" aria-label="Illustrative metadata record">
+                  {s.record.map((f) => (
+                    <div><dt>{f.label}</dt><dd class="mono" style="font-size: 0.85rem">{f.value}</dd></div>
+                  ))}
+                </dl>
+              )}
+              {s.note && <EditorialNote><p>{s.note}</p></EditorialNote>}
+            </div>
+          </div>
+          {s.workflow && <div style="margin-top: 40px"><WorkflowDiagram steps={s.workflow} id={`${p.slug}-${s.id}`} /></div>}
+          {s.chain && (
+            <ol class="chain" style="margin-top: 40px" aria-label="Relationship diagram">
+              {s.chain.map((c, i) => (
+                <li>
+                  <span class="mono" style="color: var(--terracotta-text)">{String(i + 1).padStart(2, '0')}</span>
+                  <h4>{c.title}</h4>
+                  <p>{c.detail}</p>
+                </li>
+              ))}
+            </ol>
+          )}
+          {s.mapNote && (
+            <div class="map-placeholder" style="margin-top: 40px" role="img" aria-label="Map to be added">
+              <div>
+                <span class="placeholder__label">Map · awaiting dataset</span>
+                <p class="serif-italic" style="font-size: 1.3rem; margin-top: 8px">{s.mapNote}</p>
+              </div>
+            </div>
+          )}
+          {s.gallery && <div style="margin-top: 40px"><Gallery items={s.gallery} group={`${p.slug}-${s.id}`} label={s.title} /></div>}
+        </section>
+      ))
+    }
+
+    <section class="case-section split" id="role" aria-labelledby="role-h">
+      <div class="split__label"><span class="eyebrow">Contribution</span><h2 id="role-h">Role</h2></div>
+      <div class="stack">
+        <p class="lede" style="color: var(--ink)">{p.role}</p>
+        {p.roleDetail.map((r) => <p>{r}</p>)}
+      </div>
+    </section>
+
+    <section class="case-section split" id="outcomes" aria-labelledby="out-h">
+      <div class="split__label"><span class="eyebrow">Results</span><h2 id="out-h">Outputs and outcomes</h2></div>
+      <ul class="plain-list">{p.outcomes.map((o) => <li>{o}</li>)}</ul>
+    </section>
+
+    {
+      p.gallery.length > 0 && (
+        <section class="case-section" id="gallery" aria-labelledby="gal-h">
+          <div class="split" style="margin-bottom: 40px">
+            <div class="split__label"><span class="eyebrow">Plates</span><h2 id="gal-h">Visual documentation</h2></div>
+            <div></div>
+          </div>
+          <Gallery items={p.gallery} group={`${p.slug}-gallery`} />
+        </section>
+      )
+    }
+
+    <section class="case-section split" id="related" aria-labelledby="rel-h">
+      <div class="split__label"><span class="eyebrow">Connections</span><h2 id="rel-h">Related work</h2></div>
+      <div class="stack" style="--stack: 2rem">
+        <div>
+          <h3 style="font-size: 1.3rem">Research themes</h3>
+          <ul class="plain-list">
+            {themes.map((t) => <li><a href={url(`/research/${t.slug}/`)}>{t.number} — {t.title}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-size: 1.3rem">Publications, presentations, and exhibitions</h3>
+          {
+            writing.length || exhibitions.length ? (
+              <ul class="plain-list">
+                {writing.map((w) => (
+                  <li>
+                    <a href={url(`/writing/#${w.id}`)}>{w.title}</a>
+                    <span class="meta"> · {writingTypes.find((x) => x.id === w.type)?.label}{w.date ? `, ${w.date}` : ''}</span>
+                  </li>
+                ))}
+                {exhibitions.map((e) => (
+                  <li>
+                    <a href={url(`/exhibitions/#${e.id}`)}>{e.title}</a>
+                    <span class="meta"> · Exhibition, {e.dates}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="center-empty">None listed yet.</p>
+            )
+          }
+        </div>
+        {
+          p.links && p.links.length > 0 && (
+            <div>
+              <h3 style="font-size: 1.3rem">Links</h3>
+              <ul class="plain-list">{p.links.map((l) => <li><a href={l.url} rel="noopener">{l.label}</a></li>)}</ul>
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </div>
+
+  <nav class="section section--tight" aria-label="Other projects" style="border-top: 1px solid var(--line)">
+    <div class="wrap" style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+      {prev ? <a class="arrow-link arrow-link--back" href={url(`/projects/${prev.slug}/`)}>Project {prev.number}: {prev.shortTitle}</a> : <span></span>}
+      {next && <a class="arrow-link" href={url(`/projects/${next.slug}/`)}>Project {next.number}: {next.shortTitle}</a>}
+    </div>
+  </nav>
+</MainLayout>

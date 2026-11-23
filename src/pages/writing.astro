@@ -1,0 +1,51 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import PublicationCard from '../components/PublicationCard.astro';
+import { writing, writingTypes } from '../data/writing';
+
+const sorted = [...writing].sort((a, b) => b.sortDate.localeCompare(a.sortDate));
+const counts = Object.fromEntries(writingTypes.map((t) => [t.id, writing.filter((w) => w.type === t.id).length]));
+---
+
+<MainLayout title="Writing & Presentations" description="Conference presentations, research writing, contributions, and ongoing papers by Kairavi Maniar.">
+  <PageHead
+    eyebrow="Writing & Presentations"
+    title="Writing, publications, and presentations"
+    lede="Invited conference presentations, research writing, contributions, and papers in progress."
+    trail={[{ label: 'Writing & Presentations' }]}
+  />
+
+  <section class="section" style="padding-top: 48px">
+    <div class="wrap" data-writing-root>
+      <div class="filterbar" role="group" aria-label="Filter by type">
+        <button type="button" class="chip" data-filter="all" aria-pressed="true">All ({writing.length})</button>
+        {writingTypes.map((t) => <button type="button" class="chip" data-filter={t.id} aria-pressed="false">{t.label} ({counts[t.id]})</button>)}
+      </div>
+      <p class="filter-status" aria-live="polite" data-filter-status></p>
+      <div>
+        {sorted.map((w) => <PublicationCard item={w} headingLevel="h2" />)}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-writing-root]');
+  if (root) {
+    const chips = root.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const items = root.querySelectorAll<HTMLElement>('[data-type]');
+    const status = root.querySelector('[data-filter-status]');
+    const apply = (f: string) => {
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.filter === f)));
+      let n = 0;
+      items.forEach((it) => {
+        const show = f === 'all' || it.dataset.type === f;
+        it.hidden = !show;
+        if (show) n++;
+      });
+      if (status) status.textContent = `Showing ${n} ${n === 1 ? 'item' : 'items'}.`;
+    };
+    chips.forEach((c) => c.addEventListener('click', () => apply(c.dataset.filter ?? 'all')));
+  }
+</script>

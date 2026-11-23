@@ -1,0 +1,46 @@
+---
+/**
+ * Switches between Archive Mode (light) and Reading Room Mode (dark).
+ * The choice is remembered in localStorage (if available) across pages.
+ */
+---
+
+<button class="tool-btn theme-toggle" type="button" aria-pressed="false" data-theme-toggle>
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.2">
+    <circle cx="8" cy="8" r="6"></circle>
+    <path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"></path>
+  </svg>
+  <span class="label" data-theme-label>Reading Room</span>
+  <span class="sr-only">mode</span>
+</button>
+
+<script>
+  const root = document.documentElement;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+
+  function sync() {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    buttons.forEach((b) => {
+      b.setAttribute('aria-pressed', String(dark));
+      b.title = dark ? 'Switch to Archive Mode (light)' : 'Switch to Reading Room Mode (dark)';
+      const label = b.querySelector('[data-theme-label]');
+      if (label) label.textContent = 'Reading Room';
+    });
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', dark ? '#1c1d1a' : '#f5f1e8');
+  }
+
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('km-theme', next);
+      } catch (e) {
+        /* storage unavailable — theme still applies to this page */
+      }
+      sync();
+    }),
+  );
+  sync();
+</script>

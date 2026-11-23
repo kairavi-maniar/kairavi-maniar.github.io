@@ -1,0 +1,30 @@
+---
+import Figure from './Figure.astro';
+import type { Project } from '../data/types';
+import { url } from '../lib/url';
+
+interface Props {
+  project: Project;
+  showImage?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+const { project: p, showImage = true, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+---
+
+<article class="card" data-categories={p.categories.join('|')}>
+  {showImage && <Figure image={p.cover} zoom={false} fill hideCaption sizes="(min-width: 1000px) 400px, (min-width: 640px) 50vw, 100vw" />}
+  <div class="card__top">
+    <span class="mono" style="color: var(--terracotta-text)">Project {p.number}{p.reference ? ` · ${p.reference}` : ''}</span>
+    <span class="meta">{p.duration}</span>
+  </div>
+  <a href={url(`/projects/${p.slug}/`)} style="text-decoration: none">
+    <H>{p.title}</H>
+    {p.subtitle && <p class="serif-italic" style="font-size: 1.15rem; margin-top: 4px; color: var(--ink-2)">{p.subtitle}</p>}
+  </a>
+  <p>{p.summary}</p>
+  <ul class="tags" aria-label="Categories">
+    {p.categories.map((c) => <li>{c}</li>)}
+  </ul>
+  <a class="arrow-link" href={url(`/projects/${p.slug}/`)} aria-label={`Read the case study: ${p.title}`}>Case study</a>
+</article>

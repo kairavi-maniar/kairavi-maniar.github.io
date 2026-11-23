@@ -1,0 +1,81 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import { experience } from '../data/experience';
+import { achievements } from '../data/achievements';
+import { url } from '../lib/url';
+
+const teaching = experience.filter((e) => e.kind === 'teaching' || e.kind === 'guidance');
+const ambassador = achievements.find((a) => a.id === 'program-ambassador');
+
+const entries = [
+  ...teaching.map((e) => ({ id: e.id, role: e.role, org: e.organisation, place: e.place, dates: e.dates, start: e.start, desc: e.description, project: e.project })),
+  ...(ambassador
+    ? [{ id: ambassador.id, role: 'Program Ambassador', org: 'M. Arch in History and Research, CEPT University', place: 'Ahmedabad, India', dates: ambassador.date, start: '2023-06', desc: ambassador.detail, project: undefined }]
+    : []),
+].sort((a, b) => b.start.localeCompare(a.start));
+
+const engagement = [
+  { title: 'Teaching support', detail: 'Academic teaching and teaching support for architecture and design courses at CEPT University.' },
+  { title: 'Studio discussions and reviews', detail: 'Studio discussions, studio pedagogy, and student reviews in architecture and design studios.' },
+  { title: 'Research guidance', detail: 'Research guidance within the Faculty of Architecture, and dissertation guidance for a Bachelor of Architecture research project at SEDA.' },
+  { title: 'Research-based learning', detail: 'Contributing to research-based learning processes in architecture and design coursework.' },
+  { title: 'Academic coordination', detail: 'Course-related coordination and student engagement.' },
+  { title: 'Programme representation', detail: 'Program Ambassador for the M. Arch in History and Research at CEPT University.' },
+];
+---
+
+<MainLayout title="Teaching & Academic Engagement" description="Teaching and academic engagement: CEPT University, SEDA Navrachna University, and research guidance.">
+  <PageHead
+    eyebrow="Teaching & Academic Engagement"
+    title="Teaching and academic engagement"
+    lede="Teaching, studio pedagogy, and research guidance in architecture and design education."
+    trail={[{ label: 'Teaching' }]}
+  />
+
+  <section class="section" aria-labelledby="tl-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">Timeline</span>
+        <h2 id="tl-h">Teaching experience</h2>
+        <p class="muted">{entries.length} appointments and roles, 2022 – present.</p>
+      </div>
+      <ol class="tl" style="border-left-color: var(--line-strong)">
+        {
+          entries.map((e) => (
+            <li class="tl__item" id={e.id}>
+              <span class="mono" style="color: var(--terracotta-text)">{e.dates}</span>
+              <h3 style="margin: 0.2em 0">{e.role}</h3>
+              <p class="meta" style="margin-bottom: 8px">{e.org} · {e.place}</p>
+              <p class="muted">{e.desc}</p>
+              {e.project && <a class="arrow-link" href={url(`/projects/${e.project}/`)}>Related project</a>}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--panel" aria-labelledby="eng-h">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 40px">
+        <div class="split__label">
+          <span class="eyebrow">Practice</span>
+          <h2 id="eng-h">Academic engagement</h2>
+        </div>
+        <p class="lede">Across these roles, my involvement in architectural education has included the following documented responsibilities.</p>
+      </div>
+      <ol class="methods">
+        {
+          engagement.map((m, i) => (
+            <li>
+              <span class="mono">T{String(i + 1).padStart(2, '0')}</span>
+              <h3>{m.title}</h3>
+              <p>{m.detail}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</MainLayout>

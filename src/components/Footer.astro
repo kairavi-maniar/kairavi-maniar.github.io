@@ -1,0 +1,52 @@
+---
+import { site, contact } from '../data/profile';
+import { navigation } from '../data/navigation';
+import { url } from '../lib/url';
+
+const links = [
+  contact.showEmail && contact.email ? { label: 'Email', href: `mailto:${contact.email}`, text: contact.email } : null,
+  contact.linkedin ? { label: 'LinkedIn', href: contact.linkedin } : null,
+  contact.googleScholar ? { label: 'Google Scholar', href: contact.googleScholar } : null,
+  contact.orcid ? { label: 'ORCID', href: contact.orcid } : null,
+  contact.academia ? { label: 'Academia.edu', href: contact.academia } : null,
+].filter(Boolean) as { label: string; href: string; text?: string }[];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-name">{site.name}</p>
+        <p class="muted" style="max-width: 44ch">{site.titleParts.join(' · ')}</p>
+        <p class="meta">{site.location}</p>
+      </div>
+      <nav aria-label="Footer">
+        <span class="eyebrow">Sections</span>
+        <ul style="columns: 2; column-gap: 24px">
+          {navigation.map((n) => <li><a href={url(n.href)}>{n.full ?? n.label}</a></li>)}
+        </ul>
+      </nav>
+      <div>
+        <span class="eyebrow">Correspondence</span>
+        <ul>
+          {
+            links.map((l) => (
+              <li>
+                <a href={l.href} rel={l.href.startsWith('http') ? 'me noopener' : undefined}>
+                  {l.text ?? l.label}
+                </a>
+              </li>
+            ))
+          }
+          <li><a href={url('/contact/')}>Contact page</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base meta">
+      <span>© {year} {site.name}. Archival images are credited to their respective holders.</span>
+      <span>Built with Astro · No tracking</span>
+    </div>
+  </div>
+</footer>

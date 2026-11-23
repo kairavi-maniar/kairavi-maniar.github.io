@@ -1,0 +1,29 @@
+---
+/**
+ * "To confirm" note for the site owner. Hidden from visitors when
+ * `showEditorialNotes` is set to false in src/data/profile.ts.
+ */
+import { site } from '../data/profile';
+
+interface Props {
+  items?: string[];
+  label?: string;
+}
+const { items, label = 'Editorial note · to confirm' } = Astro.props;
+---
+
+{
+  site.showEditorialNotes && (
+    <aside class="note" aria-label="Editorial note">
+      <span class="note__label">{label}</span>
+      <slot />
+      {items && items.length > 0 && (
+        <ul>
+          {items.map((i) => (
+            <li>{i}</li>
+          ))}
+        </ul>
+      )}
+    </aside>
+  )
+}

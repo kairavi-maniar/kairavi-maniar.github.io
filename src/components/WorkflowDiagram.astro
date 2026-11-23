@@ -1,0 +1,44 @@
+---
+/** Interactive step diagram: select a stage to read its description. */
+interface Props {
+  steps: { title: string; detail: string }[];
+  id: string;
+}
+const { steps, id } = Astro.props;
+---
+
+<div data-workflow>
+  <ol class="workflow" aria-label="Workflow stages">
+    {
+      steps.map((s, i) => (
+        <li>
+          <button type="button" aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`${id}-panel`} data-step={i} data-title={s.title} data-detail={s.detail}>
+            <span class="wf-title">{s.title}</span>
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+  <div class="wf-panel" id={`${id}-panel`} aria-live="polite">
+    <h4 data-wf-title>{steps[0]?.title}</h4>
+    <p data-wf-detail>{steps[0]?.detail}</p>
+  </div>
+  <ol class="no-js-details bullets">
+    {steps.map((s) => <li><strong>{s.title}.</strong> {s.detail}</li>)}
+  </ol>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-workflow]').forEach((root) => {
+    const title = root.querySelector('[data-wf-title]');
+    const detail = root.querySelector('[data-wf-detail]');
+    const buttons = root.querySelectorAll<HTMLButtonElement>('[data-step]');
+    buttons.forEach((b) =>
+      b.addEventListener('click', () => {
+        buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        if (title) title.textContent = b.dataset.title ?? '';
+        if (detail) detail.textContent = b.dataset.detail ?? '';
+      }),
+    );
+  });
+</script>

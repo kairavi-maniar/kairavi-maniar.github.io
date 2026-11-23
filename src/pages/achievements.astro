@@ -1,0 +1,59 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import { achievements, achievementGroups } from '../data/achievements';
+---
+
+<MainLayout title="Achievements" description="Academic awards, grants, committee service, and professional development of Kairavi Maniar.">
+  <PageHead
+    eyebrow="Achievements"
+    title="Achievements and professional development"
+    lede="Academic distinctions, grants and service to the field, and professional development."
+    trail={[{ label: 'Achievements' }]}
+  />
+
+  {
+    achievementGroups.map((g, gi) => {
+      const items = achievements.filter((a) => a.group === g.id);
+      return (
+        <section class:list={['section', { 'section--panel': gi === 1 }]} aria-labelledby={`${g.id}-h`} id={g.id}>
+          <div class="wrap">
+            <div class="split" style="margin-bottom: 40px">
+              <div class="split__label">
+                <span class="eyebrow">{String(gi + 1).padStart(2, '0')}</span>
+                <h2 id={`${g.id}-h`}>{g.title}</h2>
+              </div>
+              <div />
+            </div>
+            {g.id === 'academic' ? (
+              <div class="grid grid--3">
+                {items.map((a) => (
+                  <article class="award">
+                    <span class="award__date">{a.date}</span>
+                    <h3>{a.title}</h3>
+                    <p>{a.detail}</p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <ol class="tl" style="border-left-color: var(--line-strong)">
+                {items.map((a) => (
+                  <li class="tl__item">
+                    <details>
+                      <summary>
+                        <span class="mono" style="color: var(--terracotta-text)">{a.date}</span>
+                        <span class="tl__role">{a.title}</span>
+                        {a.institution && <span class="muted" style="font-size: 0.95rem">{a.institution}</span>}
+                      </summary>
+                      <div class="tl__body"><p>{a.detail}</p></div>
+                    </details>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+        </section>
+      );
+    })
+  }
+</MainLayout>

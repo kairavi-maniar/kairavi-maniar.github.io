@@ -1,0 +1,67 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import EditorialNote from '../components/EditorialNote.astro';
+import { site, contact } from '../data/profile';
+
+const rows = [
+  contact.showEmail && contact.email ? { label: 'Email', href: `mailto:${contact.email}`, text: contact.email } : null,
+  contact.showPhone && contact.phone ? { label: 'Telephone', href: `tel:${contact.phone.replace(/\s/g, '')}`, text: contact.phone } : null,
+  contact.linkedin ? { label: 'LinkedIn', href: contact.linkedin, text: contact.linkedin.replace(/^https?:\/\/(www\.)?/, '') } : null,
+  contact.googleScholar ? { label: 'Google Scholar', href: contact.googleScholar, text: 'Google Scholar profile' } : null,
+  contact.orcid ? { label: 'ORCID', href: contact.orcid, text: contact.orcid.replace(/^https?:\/\//, '') } : null,
+  contact.academia ? { label: 'Academia.edu', href: contact.academia, text: 'Academia.edu profile' } : null,
+].filter(Boolean) as { label: string; href: string; text: string }[];
+
+const missing = [
+  !contact.linkedin && 'LinkedIn URL',
+  !contact.googleScholar && 'Google Scholar URL',
+  !contact.orcid && 'ORCID iD',
+  contact.projectLinks.length === 0 && 'Relevant project websites (e.g. the EAP1678 page)',
+].filter(Boolean) as string[];
+---
+
+<MainLayout title="Contact" description={`Contact ${site.name} for academic correspondence, research collaborations, and archival initiatives.`}>
+  <PageHead
+    eyebrow="Contact"
+    title="Correspondence"
+    lede="For academic correspondence, research collaborations, archival initiatives, and related enquiries, please get in touch."
+    trail={[{ label: 'Contact' }]}
+  />
+
+  <section class="section">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">{site.location}</span>
+        <h2>{site.name}</h2>
+        <p class="muted">{site.titleParts.join(' · ')}</p>
+      </div>
+      <div>
+        <dl class="record">
+          {
+            rows.map((r) => (
+              <div>
+                <dt>{r.label}</dt>
+                <dd>
+                  <a href={r.href} rel={r.href.startsWith('http') ? 'me noopener' : undefined} style="font-family: var(--font-display); font-size: 1.5rem; text-decoration: none; word-break: break-word">
+                    {r.text}
+                  </a>
+                </dd>
+              </div>
+            ))
+          }
+          {
+            contact.projectLinks.map((l) => (
+              <div>
+                <dt>Project</dt>
+                <dd><a href={l.url} rel="noopener">{l.label}</a></dd>
+              </div>
+            ))
+          }
+        </dl>
+        {missing.length > 0 && <EditorialNote items={missing}><p>Add these in src/data/profile.ts (contact). Empty entries are hidden — no placeholder links are shown to visitors.</p></EditorialNote>}
+        <EditorialNote><p>Email is taken from the CV — please confirm it before publishing.</p></EditorialNote>
+      </div>
+    </div>
+  </section>
+</MainLayout>

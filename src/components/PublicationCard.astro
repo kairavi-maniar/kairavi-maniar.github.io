@@ -1,0 +1,53 @@
+---
+import EditorialNote from './EditorialNote.astro';
+import type { WritingItem } from '../data/types';
+import { writingTypes } from '../data/writing';
+import { getTheme, resolve } from '../lib/lookup';
+import { projectsForWriting } from '../lib/lookup';
+import { url } from '../lib/url';
+
+interface Props {
+  item: WritingItem;
+  headingLevel?: 'h2' | 'h3';
+}
+const { item: w, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+const typeLabel = writingTypes.find((t) => t.id === w.type)?.label ?? '';
+const themes = resolve(w.themes, getTheme);
+const projects = projectsForWriting(w.id);
+---
+
+<article class="entry" id={w.id} data-type={w.type}>
+  <div class="entry__meta">
+    <span class="entry__type">{typeLabel}</span>
+    {w.date && <span class="mono">{w.date}</span>}
+    {w.format && <span class="meta">{w.format}</span>}
+  </div>
+  <div>
+    <H>{w.title}</H>
+    <dl class="record" style="margin-bottom: 16px">
+      {w.author && <div><dt>Author</dt><dd>{w.author}</dd></div>}
+      {w.event && <div><dt>{w.type === 'contribution' ? 'Published in' : 'Event'}</dt><dd>{w.event}</dd></div>}
+      {w.theme && <div><dt>Conference theme</dt><dd>{w.theme}</dd></div>}
+      {w.venue && <div><dt>Venue</dt><dd>{w.venue}</dd></div>}
+      {w.status && <div><dt>Status</dt><dd>{w.status}</dd></div>}
+    </dl>
+    <p>{w.description}</p>
+    {w.notes?.map((n) => <p class="muted" style="font-size: 0.95rem">{n}</p>)}
+    {
+      (themes.length > 0 || projects.length > 0) && (
+        <p class="meta">
+          Related:{' '}
+          {[...themes.map((t) => ({ label: t.title, href: `/research/${t.slug}/` })), ...projects.map((p) => ({ label: p.shortTitle, href: `/projects/${p.slug}/` }))].map((l, i, arr) => (
+            <>
+              <a href={url(l.href)}>{l.label}</a>
+              {i < arr.length - 1 ? ' · ' : ''}
+            </>
+          ))}
+        </p>
+      )
+    }
+    {w.links?.map((l) => <a class="arrow-link" href={l.url} rel="noopener">{l.label}</a>)}
+    {w.needsConfirmation && <EditorialNote label="Needs confirmation before publishing"><p>{w.needsConfirmation}</p></EditorialNote>}
+  </div>
+</article>

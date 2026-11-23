@@ -1,0 +1,43 @@
+---
+/** Sticky in-page navigation for case studies and research themes. */
+interface Props {
+  items: { id: string; label: string }[];
+  label?: string;
+}
+const { items, label = 'On this page' } = Astro.props;
+---
+
+<nav class="subnav" aria-label={label} data-subnav>
+  <div class="wrap">
+    <ol>
+      {items.map((i) => <li><a href={`#${i.id}`}>{i.label}</a></li>)}
+    </ol>
+  </div>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-subnav]');
+  if (nav && 'IntersectionObserver' in window) {
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a'));
+    const map = new Map(links.map((a) => [a.hash.slice(1), a]));
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            links.forEach((l) => l.classList.remove('is-current'));
+            const a = map.get(en.target.id);
+            if (a) {
+              a.classList.add('is-current');
+              a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+            }
+          }
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px' },
+    );
+    map.forEach((_, id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+  }
+</script>

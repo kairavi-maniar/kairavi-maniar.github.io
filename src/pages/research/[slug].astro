@@ -1,0 +1,138 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHead from '../../components/PageHead.astro';
+import ProjectNavigation from '../../components/ProjectNavigation.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Gallery from '../../components/Gallery.astro';
+import EditorialNote from '../../components/EditorialNote.astro';
+import { researchThemes } from '../../data/research';
+import { getProject, getWriting, getExhibition, resolve } from '../../lib/lookup';
+import { writingTypes } from '../../data/writing';
+import { url } from '../../lib/url';
+import type { ResearchTheme } from '../../data/types';
+
+export function getStaticPaths() {
+  return researchThemes.map((t) => ({ params: { slug: t.slug }, props: { theme: t } }));
+}
+
+const { theme: t } = Astro.props as { theme: ResearchTheme };
+const projects = resolve(t.relatedProjects, getProject);
+const writing = resolve(t.relatedWriting, getWriting);
+const exhibitions = resolve(t.relatedExhibitions, getExhibition);
+const idx = researchThemes.findIndex((x) => x.slug === t.slug);
+const prev = researchThemes[idx - 1];
+const next = researchThemes[idx + 1];
+
+const sub = [
+  { id: 'introduction', label: 'Introduction' },
+  { id: 'questions', label: 'Questions' },
+  { id: 'projects', label: 'Related projects' },
+  { id: 'writing', label: 'Presentations & writing' },
+  { id: 'materials', label: 'Archival materials' },
+  { id: 'gallery', label: 'Gallery' },
+];
+---
+
+<MainLayout title={t.title} description={t.short} type="article">
+  <PageHead eyebrow={`Research theme ${t.number}`} title={t.title} lede={t.short} trail={[{ label: 'Research', href: '/research/' }, { label: t.title }]} />
+  <ProjectNavigation items={sub} label="Theme sections" />
+
+  <section class="section" id="introduction" aria-labelledby="intro-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">Introduction</span>
+        <h2 id="intro-h">Introductory essay</h2>
+      </div>
+      <div class="stack">
+        {t.essay.map((p, i) => <p class={i === 0 ? 'lede' : ''} style={i === 0 ? 'color: var(--ink)' : ''}>{p}</p>)}
+        <div class="keyline">
+          <span class="eyebrow">Topics</span>
+          <ul class="tags">{t.topics.map((x) => <li>{x}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel" id="questions" aria-labelledby="q-h">
+    <div class="wrap split">
+      <div class="split__label">
+        <span class="eyebrow">Inquiry</span>
+        <h2 id="q-h">Main questions</h2>
+      </div>
+      <div>
+        <ol class="index-list">
+          {t.questions.map((q, i) => <li><span class="mono">Q{i + 1}</span><p class="serif-italic" style="font-size: 1.4rem; line-height: 1.35; margin: 0">{q}</p></li>)}
+        </ol>
+        <EditorialNote><p>Introductory essay and questions are drafts framed from your research profile — please revise (src/data/research.ts).</p></EditorialNote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projects" aria-labelledby="p-h">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 40px">
+        <div class="split__label"><span class="eyebrow">Connections</span><h2 id="p-h">Related projects</h2></div>
+        <div></div>
+      </div>
+      {projects.length ? <div class="grid grid--3">{projects.map((p) => <ProjectCard project={p} />)}</div> : <p class="center-empty">No related projects yet.</p>}
+    </div>
+  </section>
+
+  <section class="section" id="writing" aria-labelledby="w-h">
+    <div class="wrap split">
+      <div class="split__label"><span class="eyebrow">Scholarship</span><h2 id="w-h">Related presentations and writing</h2></div>
+      <div>
+        {
+          writing.length || exhibitions.length ? (
+            <ol class="index-list">
+              {writing.map((w) => (
+                <li>
+                  <span class="mono">{w.sortDate.slice(0, 4)}</span>
+                  <div>
+                    <a href={url(`/writing/#${w.id}`)}><strong>{w.title}</strong></a>
+                    <p class="meta" style="margin: 4px 0 0">{writingTypes.find((x) => x.id === w.type)?.label} · {w.event}</p>
+                  </div>
+                </li>
+              ))}
+              {exhibitions.map((e) => (
+                <li>
+                  <span class="mono">{e.sortDate.slice(0, 4)}</span>
+                  <div>
+                    <a href={url(`/exhibitions/#${e.id}`)}><strong>{e.title}</strong></a>
+                    <p class="meta" style="margin: 4px 0 0">Exhibition · {e.role}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p class="center-empty">Related writing will be listed here.</p>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel" id="materials" aria-labelledby="m-h">
+    <div class="wrap split">
+      <div class="split__label"><span class="eyebrow">Sources</span><h2 id="m-h">Related archival materials</h2></div>
+      <ul class="plain-list">{t.materials.map((m) => <li>{m}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section" id="gallery" aria-labelledby="g-h">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 40px">
+        <div class="split__label"><span class="eyebrow">Plates</span><h2 id="g-h">Image gallery</h2></div>
+        <div></div>
+      </div>
+      <Gallery items={t.gallery} group={`theme-${t.slug}`} label={`${t.title} — images`} />
+    </div>
+  </section>
+
+  <nav class="section section--tight" aria-label="Other research themes">
+    <div class="wrap" style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+      {prev ? <a class="arrow-link arrow-link--back" href={url(`/research/${prev.slug}/`)}>{prev.number} {prev.title}</a> : <span></span>}
+      {next && <a class="arrow-link" href={url(`/research/${next.slug}/`)}>{next.number} {next.title}</a>}
+    </div>
+  </nav>
+</MainLayout>

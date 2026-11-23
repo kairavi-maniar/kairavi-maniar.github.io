@@ -1,0 +1,23 @@
+---
+import Figure from './Figure.astro';
+import type { ImageItem } from '../data/types';
+
+interface Props {
+  items: ImageItem[];
+  group?: string;
+  columns?: 2 | 3;
+  label?: string;
+}
+const { items, group = 'gallery', columns = 3, label } = Astro.props;
+const sizes = columns === 3 ? '(min-width: 1000px) 380px, (min-width: 600px) 50vw, 100vw' : '(min-width: 600px) 50vw, 100vw';
+---
+
+{
+  items.length > 0 && (
+    <div class:list={['gallery', { 'gallery--3': columns === 3 }]} role="group" aria-label={label ?? 'Image gallery'}>
+      {items.map((img) => (
+        <Figure image={img} group={group} sizes={sizes} />
+      ))}
+    </div>
+  )
+}
