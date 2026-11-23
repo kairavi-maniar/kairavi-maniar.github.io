@@ -556,3 +556,7 @@ html:not(.js) .wf-panel { display: none; }
   .cv h2 { margin-top: 18px; }
   a { text-decoration: none; }
 }
+
+/* Figure in a page header's right column */
+.head-figure { max-width: 340px; }
+@media (min-width: 900px) { .head-figure { margin-left: auto; } }

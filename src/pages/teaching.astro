@@ -1,6 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import PageHead from '../components/PageHead.astro';
+import Figure from '../components/Figure.astro';
+import { teachingImage } from '../data/profile';
 import { experience } from '../data/experience';
 import { achievements } from '../data/achievements';
 import { url } from '../lib/url';
@@ -31,7 +33,11 @@ const engagement = [
     title="Teaching and academic engagement"
     lede="Teaching, studio pedagogy, and research guidance in architecture and design education."
     trail={[{ label: 'Teaching' }]}
-  />
+  >
+    <div class="head-figure">
+      <Figure image={teachingImage} eager sizes="340px" />
+    </div>
+  </PageHead>
 
   <section class="section" aria-labelledby="tl-h">
     <div class="wrap split">

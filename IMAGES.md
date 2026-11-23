@@ -22,8 +22,8 @@ drop the image (renamed as below) → **Commit changes**. The site updates in ab
 | Folder | File name | What it should show |
 | --- | --- | --- |
 | `architecture/` | `hero-drawing.jpg` | Home page hero: a strong historical drawing or archival photograph (portrait shape works best) |
-| `profile/` | `portrait.jpg` | Kairavi's portrait (About page) |
-| `archival-research/` | `beyond-cover.jpg` | Cover: Beyond the Archive's Walls — the PWD record room |
+| `profile/` | `portrait.jpg` | ✅ Added — Kairavi's portrait (About page) |
+| `archival-research/` | `beyond-cover.jpg` | ✅ Added — Cover: Beyond the Archive's Walls (CEPT talk photo) |
 | `eap1678/` | `cover.jpg` | Cover: EAP1678 — drawings/records being prepared for digitisation |
 | `lantern-slides/` | `cover.jpg` | Cover: Town Planning Maharashtra — a lantern slide |
 | `symposium/` | `cover.jpg` | Cover: On and Off the Record? — poster or call-for-abstracts image |
@@ -38,7 +38,7 @@ drop the image (renamed as below) → **Commit changes**. The site updates in ab
 | File name | What it should show |
 | --- | --- |
 | `scanner-01.jpg` | Large-format scanner |
-| `workstation-01.jpg` | Digitisation workstation *(also on Research theme 04)* |
+| `workstation-01.jpg` | ✅ Added — Digitisation workstation *(also on Research theme 04)* |
 | `drawing-01.jpg` | An archival drawing from the collection |
 | `books-journals-01.jpg` | PWD books and journals |
 | `preservation-materials-01.jpg` | Preservation materials |

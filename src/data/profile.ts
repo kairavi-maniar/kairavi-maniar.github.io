@@ -73,6 +73,14 @@ export const hero = {
 /** Portrait (optional). Add src/assets/images/profile/portrait.jpg to show it on the About page. */
 export const portrait = {
   src: 'profile/portrait.jpg',
+  alt: 'Portrait of Kairavi Maniar',
+  caption: 'Kairavi Maniar',
+  orientation: 'portrait' as const,
+};
+
+/** Photograph at the top of the Teaching page. */
+export const teachingImage = {
+  src: 'profile/speaking-cept.jpg',
   alt: 'Kairavi Maniar speaking at a CEPT University lectern',
   caption: 'Speaking at CEPT University',
   orientation: 'portrait' as const,
