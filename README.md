@@ -1,7 +1,7 @@
 # Kairavi Maniar — Portfolio
 
 Personal academic portfolio of Kairavi Maniar, architectural historian and researcher.
-Live at **https://kairavimaniar24-lgtm.github.io**.
+Live at **https://kairavi-maniar.github.io**.
 
 Built with [Astro](https://astro.build) as a static site. No tracking, no analytics, no advertising.
 
@@ -108,7 +108,7 @@ npm run preview    # preview the production build
 The site deploys automatically from the `main` branch via `.github/workflows/deploy.yml`.
 
 One-time setup: repository **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-The repository must be named `kairavimaniar24-lgtm.github.io` for the site to be served at the
+The repository must be named `kairavi-maniar.github.io` for the site to be served at the
 root URL. (If you ever use a different repository name, set `base: '/<repo-name>'` in
 `astro.config.mjs`.)
 
