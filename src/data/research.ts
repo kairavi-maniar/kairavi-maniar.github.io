@@ -144,7 +144,7 @@ export const researchThemes: ResearchTheme[] = [
     relatedWriting: [],
     materials: ['Digitised drawings (TIFF masters)', 'Metadata records', 'Digital file structures', 'Digitisation process photographs'],
     gallery: [
-      { src: 'eap1678/workstation-01.jpg', alt: 'Digitisation workstation', caption: 'Digitisation workstation', orientation: 'landscape' },
+      { src: 'eap1678/workstation-01.jpg', alt: 'A camera on a copy stand between two lights above a digitisation table with a laptop, as three team members prepare material', caption: 'Camera-based digitisation workstation', orientation: 'landscape' },
       { src: 'eap1678/metadata-example.png', alt: 'Example metadata record', caption: 'Metadata example', orientation: 'landscape' },
     ],
   },

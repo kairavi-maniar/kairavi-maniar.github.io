@@ -42,8 +42,8 @@ export const projects: Project[] = [
       'A study of the archival habitat of the Pune Public Works Region — understood through its physical spaces, documents, institutional environment, people, and preservation practices.',
     cover: {
       src: 'archival-research/beyond-cover.jpg',
-      alt: 'Record room of the Pune Public Works Region archive',
-      caption: 'The record room, Pune Public Works Region',
+      alt: 'Kairavi Maniar at a CEPT University lectern beside a projected slide titled “Working with the Poona PWD Archives: Research, People and Preservation”, showing a record room crowded with bundled files and shelves of records',
+      caption: 'Presenting “Working with the Poona PWD Archives: Research, People and Preservation” at CEPT University',
       orientation: 'landscape',
     },
     context: [
@@ -246,7 +246,7 @@ export const projects: Project[] = [
         title: 'Visual Documentation',
         gallery: [
           { src: 'eap1678/scanner-01.jpg', alt: 'Large-format scanner', caption: 'Large-format scanner', orientation: 'landscape' },
-          { src: 'eap1678/workstation-01.jpg', alt: 'Digitisation workstation', caption: 'Digitisation workstation', orientation: 'landscape' },
+          { src: 'eap1678/workstation-01.jpg', alt: 'A camera on a copy stand between two lights above a digitisation table with a laptop, as three team members prepare material', caption: 'Camera-based digitisation workstation', orientation: 'landscape' },
           { src: 'eap1678/drawing-01.jpg', alt: 'Archival drawing from the Poona PWD records', caption: 'Archival drawing', ref: 'EAP1678/—', orientation: 'landscape' },
           { src: 'eap1678/books-journals-01.jpg', alt: 'PWD books and journals', caption: 'Books and journals', orientation: 'portrait' },
           { src: 'eap1678/preservation-materials-01.jpg', alt: 'Preservation materials', caption: 'Preservation materials', orientation: 'landscape' },

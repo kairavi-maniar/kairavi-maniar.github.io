@@ -62,7 +62,7 @@ const full = meta ? await getImage({ src: meta, width: Math.min(meta.width, 2400
     )
   }
   {
-    !hideCaption && (meta || image.credit || image.ref) && (
+    !hideCaption && meta && (
       <figcaption>
         {meta && <span class="plate__caption">{image.caption}</span>}
         {image.ref && <span class="plate__ref">{image.ref}</span>}
