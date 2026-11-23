@@ -74,8 +74,10 @@ It appears on the Writing page (with filters), in search, and on the CV (present
 ### Update the CV
 - **Online CV**: it is built from the data files, so updating `experience.ts`, `writing.ts`,
   etc. updates the CV too. To change the CV alone, edit `src/data/cv.ts`.
-- **PDF**: replace `public/documents/CV_Kairavi.pdf` with a new file of the **same name**.
-  To hide the download button, set `cv.showDownload: false` in `profile.ts`.
+- **PDF**: upload the CV as `public/documents/CV_Kairavi.pdf` (exact name). The **Download CV PDF**
+  button appears automatically once the file exists. Use a version **without phone numbers** —
+  everything in this repository is public. To hide the button anyway, set `cv.showDownload: false`
+  in `profile.ts`. To update it later, upload a new file with the same name.
 
 ### Contact links
 `src/data/profile.ts` → `contact`. Paste full URLs for LinkedIn, Google Scholar and ORCID.

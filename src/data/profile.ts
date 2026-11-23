@@ -20,7 +20,7 @@ export const site = {
    * that still needs checking. Set to `false` before the final launch to
    * hide them from visitors. Image placeholders remain until images are added.
    */
-  showEditorialNotes: true,
+  showEditorialNotes: false,
 };
 
 /**
@@ -31,7 +31,7 @@ export const site = {
  * want it public, and set `showPhone: true`.
  */
 export const contact = {
-  // TODO (confirm): email taken from the CV — confirm before publishing.
+  // Confirmed for public display (Nov 2026).
   email: 'kairavimaniar24@gmail.com',
   showEmail: true,
   phone: '',
@@ -47,7 +47,10 @@ export const contact = {
   ] as { label: string; url: string }[],
 };
 
-/** CV download. Replace the file in /public/documents/ (same name) to update it. */
+/**
+ * CV download. The button appears automatically once a file exists at
+ * public/documents/CV_Kairavi.pdf (upload a version WITHOUT phone numbers).
+ */
 export const cv = {
   pdf: '/documents/CV_Kairavi.pdf',
   showDownload: true,
