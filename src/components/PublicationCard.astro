@@ -1,5 +1,6 @@
 ---
 import EditorialNote from './EditorialNote.astro';
+import Figure from './Figure.astro';
 import type { WritingItem } from '../data/types';
 import { writingTypes } from '../data/writing';
 import { getTheme, resolve } from '../lib/lookup';
@@ -34,6 +35,7 @@ const projects = projectsForWriting(w.id);
     </dl>
     <p>{w.description}</p>
     {w.notes?.map((n) => <p class="muted" style="font-size: 0.95rem">{n}</p>)}
+    {w.image && <div style="margin: 20px 0 24px; max-width: 760px"><Figure image={w.image} group={`writing-${w.id}`} sizes="(min-width: 900px) 760px, 100vw" /></div>}
     {
       (themes.length > 0 || projects.length > 0) && (
         <p class="meta">

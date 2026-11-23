@@ -1,111 +1,89 @@
 # Image checklist
 
-The site has **56 image places**. Each one currently shows a hatched placeholder with the file
-name it expects. Upload a file with **exactly that name** into the folder shown, and it appears
-on the site automatically (resized and compressed — no need to shrink files first).
+**25 images are on the site. 36 places still show a placeholder** (listed below).
 
-**How to upload on GitHub:** open `src/assets/images/<folder>/` → **Add file → Upload files** →
-drop the image (renamed as below) → **Commit changes**. The site updates in about 1 minute.
+Upload a file with **exactly the name shown** into `src/assets/images/<folder>/` (on GitHub: open the folder → **Add file → Upload files** → **Commit changes**). It appears on the site automatically in about a minute — resized, never cropped. To replace an existing photo, upload a new file with the same name.
 
-**Tips**
-- JPG for photographs and scans, PNG for screenshots and diagrams. Ideally 1600 px wide or more.
-- Drawings and documents are never cropped — any proportion works.
-- Only publish material you have permission to use. Add the credit line (e.g. *Courtesy Pune PWD
-  Archives*) and a short description in the matching data file — the `credit`, `caption` and
-  `alt` fields next to the file name in `src/data/*.ts`.
-- Don't have an image for a place? Ask for it to be removed instead of leaving a placeholder.
+Only publish material you have permission to use. Captions, credit lines and descriptions are next to each file name in `src/data/*.ts` (`caption`, `credit`, `alt`).
 
----
+## Still needed
 
-## Priority 1 — the most visible (10)
+### `archival-research/`
 
-| Folder | File name | What it should show |
+| File name | What it should show | Where |
 | --- | --- | --- |
-| `architecture/` | `hero-drawing.jpg` | ✅ Added (Sassoon Hospital elevation) — Home page hero: a strong historical drawing or archival photograph (portrait shape works best) |
-| `profile/` | `portrait.jpg` | ✅ Added — Kairavi's portrait (About page) |
-| `archival-research/` | `beyond-cover.jpg` | ✅ Added — Cover: Beyond the Archive's Walls (CEPT talk photo) |
-| `eap1678/` | `cover.jpg` | Cover: EAP1678 — drawings/records being prepared for digitisation |
-| `lantern-slides/` | `cover.jpg` | Cover: Town Planning Maharashtra — a lantern slide |
-| `symposium/` | `cover.jpg` | Cover: On and Off the Record? — poster or call-for-abstracts image |
-| `research/` | `concrete-cover.jpg` | Cover: Modernization Before the Modernists — early concrete building |
-| `architecture/` | `wittet-begg-cover.jpg` | Cover: Wittet & Begg — a building in Bombay or Poona |
-| `exhibitions/` | `peoples-buildings-cover.jpg` | Exhibition view, People's Buildings (Pune, Jan 2024) |
-| `exhibitions/` | `jaigarh-cover.jpg` | Exhibition view, Jaigarh (Dec 2024) |
-
-## Priority 2 — project and exhibition galleries
-
-### `eap1678/` — Poona PWD Records (EAP1678)
-| File name | What it should show |
-| --- | --- |
-| `scanner-01.jpg` | Large-format scanner |
-| `workstation-01.jpg` | ✅ Added — Digitisation workstation *(also on Research theme 04)* |
-| `drawing-01.jpg` | An archival drawing from the collection |
-| `books-journals-01.jpg` | PWD books and journals |
-| `preservation-materials-01.jpg` | Preservation materials |
-| `metadata-example.png` | Screenshot of a metadata record *(also on Research theme 04)* |
-| `file-structure.png` | Screenshot of the digital folder/file structure |
-| `storage-01.jpg` | Conservation and storage |
-
-### `archival-research/` — Beyond the Archive's Walls
-| File name | What it should show |
-| --- | --- |
-| `record-room-01.jpg` | Record room *(also on Research theme 03)* |
-| `record-room-02.jpg` | Storage and shelving *(also on Research theme 03)* |
-| `record-room-03.jpg` | Archival files / bundles *(also on Research theme 03)* |
-| `drawing-01.jpg` | One of the 23 analysed drawings |
-| `drawing-02.jpg` | Another analysed drawing |
-| `project-file-01.jpg` | A page from a PWD project file |
+| `drawing-01.jpg` | Architectural drawing | Projects |
+| `drawing-02.jpg` | Architectural drawing | Projects |
+| `project-file-01.jpg` | Project file | Projects |
 
 ### `maps/`
-| File name | What it should show |
-| --- | --- |
-| `pwd-campus-historical.jpg` | Historical map of the PWD campus |
-| `pwd-campus-contemporary.jpg` | Contemporary plan of the PWD campus |
-| `qgis-01.png` | QGIS screenshot — mapped buildings *(lantern slides + Research theme 05)* |
-| `qgis-02.png` | QGIS screenshot — a map pop-up |
-| `historical-map-01.jpg` | A historical map (Research theme 05) |
 
-### `lantern-slides/` — Town Planning Maharashtra
-| File name | What it should show |
-| --- | --- |
-| `before-01.jpg` | A slide before digitisation (the glass object) |
-| `after-01.jpg` | The same slide after digitisation |
-| `metadata-example.png` | Screenshot of a slide's metadata record |
-| `slide-01.jpg` … `slide-04.jpg` | Four digitised lantern slides |
+| File name | What it should show | Where |
+| --- | --- | --- |
+| `pwd-campus-historical.jpg` | Campus — historical map | Projects |
+| `pwd-campus-contemporary.jpg` | Campus — contemporary plan | Projects |
+| `qgis-01.png` | QGIS — mapped buildings | Projects, Research themes |
+| `qgis-02.png` | QGIS — interactive pop-up | Projects |
 
-### `exhibitions/`
-| File name | What it should show |
-| --- | --- |
-| `peoples-buildings-01.jpg` | Exhibition photograph |
-| `peoples-buildings-02.jpg` | Panels and display design |
-| `peoples-buildings-03.jpg` | Architectural drawing on display |
-| `peoples-buildings-04.jpg` | Historical photograph on display |
-| `jaigarh-01.jpg` | Exhibition installation |
-| `jaigarh-02.jpg` | An exhibition panel |
-| `jaigarh-03.jpg` | Interpretive material |
+### `research/`
+
+| File name | What it should show | Where |
+| --- | --- | --- |
+| `archival-habitat-diagram.png` | Research diagram — the archival habitat at multiple scales | Projects |
+| `concrete-cover.jpg` | Concrete construction, early twentieth century | Projects |
+| `concrete-01.jpg` | Archival material | Projects |
+| `concrete-02.jpg` | Documentation | Projects |
+
+### `eap1678/`
+
+| File name | What it should show | Where |
+| --- | --- | --- |
+| `metadata-example.png` | Metadata example | Projects |
+
+### `lantern-slides/`
+
+| File name | What it should show | Where |
+| --- | --- | --- |
+| `cover.jpg` | Town planning lantern slide | Projects |
+| `before-01.jpg` | Before — physical slide | Projects |
+| `after-01.jpg` | After — digitised image | Projects |
+| `metadata-example.png` | Metadata record | Projects |
+| `slide-01.jpg` | Lantern slide | Projects |
+| `slide-02.jpg` | Lantern slide | Projects |
+| `slide-03.jpg` | Lantern slide | Projects |
+| `slide-04.jpg` | Lantern slide | Projects |
 
 ### `symposium/`
-| File name | What it should show |
-| --- | --- |
-| `documentation-01.jpg` | Symposium documentation photograph (once held) |
-| `exhibition-01.jpg` | Symposium exhibition (once held) |
 
-### `architecture/` — Wittet & Begg (with the student's agreement)
-| File name | What it should show |
-| --- | --- |
-| `wittet-begg-drawing-01.jpg` | Architectural drawing |
-| `wittet-begg-photo-01.jpg` | Historical photograph |
-| `wittet-begg-construction-01.jpg` | Construction documentation |
-
-## Priority 3 — research theme galleries (`research/`)
-
-| File name | Theme | What it should show |
+| File name | What it should show | Where |
 | --- | --- | --- |
-| `construction-01.jpg` | 01 Construction History | Not needed — the Sassoon Hospital drawing is used here |
-| `construction-02.jpg` | 01 Construction History | ✅ Added — Poona District Specifications, 1919 |
-| `construction-03.jpg` | 01 Construction History | ✅ Added — Central Building, Pune |
-| `materials-01.jpg` | 02 Materials | Early twentieth-century concrete construction |
-| `materials-02.jpg` | 02 Materials | A page from a technical journal |
-| `concrete-01.jpg` | Project 05 | Archival material on concrete |
-| `concrete-02.jpg` | Project 05 | Documentation photograph |
-| `archival-habitat-diagram.png` | Project 01 | Research diagram: the archival habitat at multiple scales |
+| `cover.jpg` | Symposium — On and Off the Record? | Projects |
+| `documentation-01.jpg` | Documentation | Projects |
+| `exhibition-01.jpg` | Exhibition | Projects |
+
+### `architecture/`
+
+| File name | What it should show | Where |
+| --- | --- | --- |
+| `wittet-begg-cover.jpg` | Bombay / Poona, 1900s–1920s | Projects |
+| `wittet-begg-drawing-01.jpg` | Architectural drawing | Projects |
+| `wittet-begg-photo-01.jpg` | Historical photograph | Projects |
+| `wittet-begg-construction-01.jpg` | Construction documentation | Projects |
+
+### `exhibitions/`
+
+| File name | What it should show | Where |
+| --- | --- | --- |
+| `jaigarh-cover.jpg` | Exhibition view — Jaigarh, December 2024 | Exhibitions |
+| `jaigarh-01.jpg` | Exhibition installation | Exhibitions |
+| `jaigarh-02.jpg` | Exhibition panel | Exhibitions |
+| `jaigarh-03.jpg` | Interpretive material | Exhibitions |
+| `peoples-buildings-cover.jpg` | Exhibition view — Pune, January 2024 | Exhibitions |
+| `peoples-buildings-01.jpg` | Exhibition photograph | Exhibitions |
+| `peoples-buildings-02.jpg` | Panels and display design | Exhibitions |
+| `peoples-buildings-03.jpg` | Architectural drawing on display | Exhibitions |
+| `peoples-buildings-04.jpg` | Historical photograph on display | Exhibitions |
+
+## Already on the site
+
+`architecture/hero-drawing.jpg`, `archival-research/beyond-cover.jpg`, `archival-research/record-room-01.jpg`, `archival-research/record-room-02.jpg`, `archival-research/record-room-03.jpg`, `eap1678/books-journals-01.jpg`, `eap1678/books-journals-02.jpg`, `eap1678/cover.jpg`, `eap1678/qc-colour-target-01.jpg`, `eap1678/qc-colour-target-02.jpg`, `eap1678/workstation-01.jpg`, `maps/historical-map-01.jpg`, `profile/portrait.jpg`, `profile/speaking-cept.jpg`, `research/camera-copy-stand.jpg`, `research/chs-cambridge-2026.jpg`, `research/construction-02.jpg`, `research/construction-03.jpg`, `research/copy-stand-01.jpg`, `research/copy-stand-02.jpg`, `research/lloyd-dam-1914.jpg`, `research/lloyd-dam-1922.jpg`, `research/lloyd-dam-tablet.jpg`, `research/pwd-offices-bombay.jpg`, `research/subordinate-engineers.jpg`

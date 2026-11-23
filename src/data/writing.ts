@@ -95,6 +95,12 @@ export const writing: WritingItem[] = [
     description:
       'The abstract was conditionally accepted, and the full paper submission was under review at the time the CV was prepared.',
     themes: ['construction-history-and-colonial-public-works'],
+    image: {
+      src: 'research/chs-cambridge-2026.jpg',
+      alt: 'A speaker at a Queens’ College lectern on a dark stage, beneath a projected slide of a handwritten Comparative Statement from the Poona PWD Archives, beside a Construction History Society banner',
+      caption: '12th Construction History Society Conference, Queens’ College, Cambridge',
+      orientation: 'landscape',
+    },
     needsConfirmation:
       'These conference dates are now in the past. Please confirm the paper title, whether the paper was presented, and any publication status before this entry is published. Until confirmed, it is not described as presented or published.',
   },

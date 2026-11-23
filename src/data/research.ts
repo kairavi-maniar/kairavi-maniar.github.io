@@ -42,8 +42,11 @@ export const researchThemes: ResearchTheme[] = [
     materials: ['Architectural drawings (Poona PWD records)', 'Project files', 'Administrative reports', 'Building specifications and estimates', 'PWD books and journals'],
     gallery: [
       { src: 'architecture/hero-drawing.jpg', alt: 'Ink drawing of the south and north elevations of the Jacob Sassoon Hospital, Poona', caption: 'Jacob Sassoon Hospital, Poona — south and north elevations', orientation: 'landscape' },
+      { src: 'research/pwd-offices-bombay.jpg', alt: 'Nineteenth-century photograph of the Public Works Offices, Bombay: a Gothic Revival building with steep roofs and arcaded storeys behind a fountain, with scaffolding on a neighbouring building', caption: 'Public Works Offices, Bombay — nineteenth-century photograph, No. 11', credit: 'Photograph: F. Vicajee & Co., Fort Bombay', orientation: 'landscape' },
       { src: 'research/construction-02.jpg', alt: 'Title page reading “Public Works Department, Bombay. Poona District Specifications. Poona: Printed at the Yeravda Prison Press, 1919”', caption: 'Poona District Specifications, Public Works Department, Bombay (Poona: Yeravda Prison Press, 1919) — title page', orientation: 'portrait' },
       { src: 'research/construction-03.jpg', alt: 'Stone façade of the Central Building, Pune, with arched upper verandahs, round openings, paired columns, and government office signboards', caption: 'Central Building, Dr. Annie Besant Road, Pune — present-day view', orientation: 'landscape' },
+      { src: 'eap1678/books-journals-01.jpg', alt: 'Worn cover reading “Government of India, Public Works Department. Forms referred to in the Code of Regulations for the Public Works Department. Fifth Edition … Part I. Calcutta, 1906”', caption: 'Forms referred to in the Code of Regulations for the Public Works Department, 5th ed., Part I (Calcutta, 1906)', orientation: 'portrait' },
+      { src: 'research/subordinate-engineers.jpg', alt: 'Printed group photograph of some ninety men in front of an arcaded building, titled “The Association of the Subordinate Service of Engineers, P.W.D. Bombay. Thirty Second Annual Conference, Bombay”', caption: 'The Association of the Subordinate Service of Engineers, P.W.D. Bombay — Thirty-Second Annual Conference, Bombay', orientation: 'landscape' },
     ],
   },
   {
@@ -74,8 +77,9 @@ export const researchThemes: ResearchTheme[] = [
     relatedWriting: ['epistle-2024-facade-aesthetics'],
     materials: ['Technical journals', 'Construction documentation', 'Historical photographs', 'Building specifications'],
     gallery: [
-      { src: 'research/materials-01.jpg', alt: 'Early twentieth-century concrete construction', caption: 'Concrete construction, early twentieth century', orientation: 'landscape' },
-      { src: 'research/materials-02.jpg', alt: 'Page from a historical technical journal', caption: 'Technical journal', orientation: 'portrait' },
+      { src: 'research/lloyd-dam-1914.jpg', alt: 'Mounted archival photograph of a vast excavation with workers, a pipe carried across the trench, and the curved wall of an older dam behind; captioned “S. No. 9 … Lloyd Dam … Year 1914”', caption: 'Excavation for the Lloyd Dam, showing the pipe carrying water from the old dam over the foundation trench — mounted photograph, 1914', ref: 'S. No. 9', orientation: 'landscape' },
+      { src: 'research/lloyd-dam-1922.jpg', alt: 'Printed panoramic photograph of the partly built masonry Lloyd Dam with a row of arched sluices, captioned “The Lloyd Dam at Bhatgar in progress. March, 1922. Up-stream elevation of new dam, from top of old dam”', caption: 'The Lloyd Dam at Bhatgar in progress, March 1922 — up-stream elevation of the new dam, from the top of the old dam', orientation: 'landscape' },
+      { src: 'research/lloyd-dam-tablet.jpg', alt: 'Photograph of a tablet recording the Government of Bombay’s appreciation of the Bhor State’s assistance with the Lloyd Dam, whose construction commenced in 1913 and was completed in 1928', caption: 'Tablet recording the co-operation of the Bhor State in building the Lloyd Dam (commenced 1913, completed 1928) — photograph in an album', orientation: 'portrait' },
     ],
   },
   {
@@ -109,9 +113,9 @@ export const researchThemes: ResearchTheme[] = [
     relatedExhibitions: ['peoples-buildings-2024'],
     materials: ['Record room photographs', 'Archival storage documentation', 'Campus maps and plans', 'Records-management documents'],
     gallery: [
-      { src: 'archival-research/record-room-01.jpg', alt: 'Record room of the Pune Public Works Region', caption: 'Record room', orientation: 'landscape' },
-      { src: 'archival-research/record-room-02.jpg', alt: 'Archival storage shelving', caption: 'Archival storage', orientation: 'portrait' },
-      { src: 'archival-research/record-room-03.jpg', alt: 'Bundles of archival files', caption: 'Archival files', orientation: 'landscape' },
+      { src: 'archival-research/record-room-01.jpg', alt: 'Team members in masks, gloves and hairnets among shelves of bundled files in a dimly lit record room', caption: 'Working among bundled files in the record room', orientation: 'landscape' },
+      { src: 'archival-research/record-room-02.jpg', alt: 'A researcher in a mask and nitrile gloves reaching for bundled files on metal shelving, with a colleague working further down the aisle', caption: 'Locating files on the record-room shelves', orientation: 'landscape' },
+      { src: 'archival-research/record-room-03.jpg', alt: 'A researcher in a hairnet, mask, apron and gloves lifting a stack of brittle files between crowded shelves', caption: 'Handling a bundle of files in the record room', orientation: 'landscape' },
     ],
   },
   {
@@ -145,7 +149,11 @@ export const researchThemes: ResearchTheme[] = [
     materials: ['Digitised drawings (TIFF masters)', 'Metadata records', 'Digital file structures', 'Digitisation process photographs'],
     gallery: [
       { src: 'eap1678/workstation-01.jpg', alt: 'A camera on a copy stand between two lights above a digitisation table with a laptop, as three team members prepare material', caption: 'Camera-based digitisation workstation', orientation: 'landscape' },
-      { src: 'eap1678/metadata-example.png', alt: 'Example metadata record', caption: 'Metadata example', orientation: 'landscape' },
+      { src: 'research/copy-stand-01.jpg', alt: 'Copy stand with a camera between two LED panels; a stereo photograph card lies on the black baseboard while its live view appears on a laptop', caption: 'Copy-stand capture of a stereo photograph, with live view on the laptop', orientation: 'landscape' },
+      { src: 'research/camera-copy-stand.jpg', alt: 'Overhead view of a DSLR camera mounted on a copy stand above a small glass object in a black mask on a grid cutting mat', caption: 'Camera on a copy stand, positioned over a small glass object', orientation: 'portrait' },
+      { src: 'research/copy-stand-02.jpg', alt: 'Copy stand with two diffused lights; a stereo photograph sits inside a frame on a black board, with a spirit level, cotton gloves and a weight nearby', caption: 'Copy-stand set-up with diffused lighting, spirit level and handling materials', orientation: 'landscape' },
+      { src: 'eap1678/qc-colour-target-01.jpg', alt: 'Laptop screen showing the digitised title page of Public Works Department Code, Volume VI, Tables of Salaries, beside a Tiffen colour control patch strip; file name PWDC_049_0001.JPG', caption: 'Image check on screen: Public Works Department Code, Vol. VI, Tables of Salaries (Calcutta, 1884), captured with a colour control target', ref: 'PWDC_049_0001', orientation: 'portrait' },
+      { src: 'eap1678/qc-colour-target-02.jpg', alt: 'Laptop screen showing the digitised title page of Public Works Department Code, Volume I, General Regulations, beside a colour control patch strip; file name PWDC_055_0029.JPG', caption: 'Public Works Department Code, Vol. I, General Regulations (Calcutta, 1902), captured with a colour control target', ref: 'PWDC_055_0029', orientation: 'portrait' },
     ],
   },
   {
@@ -177,7 +185,7 @@ export const researchThemes: ResearchTheme[] = [
     materials: ['Lantern slides', 'Historical maps', 'QGIS project screenshots', 'Campus development maps'],
     gallery: [
       { src: 'maps/qgis-01.png', alt: 'QGIS screenshot of mapped buildings', caption: 'QGIS mapping', orientation: 'landscape' },
-      { src: 'maps/historical-map-01.jpg', alt: 'Historical map', caption: 'Historical map', orientation: 'landscape' },
+      { src: 'maps/historical-map-01.jpg', alt: 'Printed colour plan in an open book showing troop positions around Koregaon village on the Bhima river, with legends, an enlarged plan of the village, and references', caption: 'Plan of the Defence of Koregaon, 1 January 1818 — Govt. Photozincographic Office, Poona, 1880', orientation: 'landscape' },
     ],
   },
 ];

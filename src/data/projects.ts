@@ -84,9 +84,9 @@ export const projects: Project[] = [
         title: 'The Physical Archive',
         body: ['Photographs and documentation of the record room and the archival environment.'],
         gallery: [
-          { src: 'archival-research/record-room-01.jpg', alt: 'Record room of the Pune Public Works Region', caption: 'Record room', orientation: 'landscape' },
-          { src: 'archival-research/record-room-02.jpg', alt: 'Archival storage shelving', caption: 'Storage and shelving', orientation: 'portrait' },
-          { src: 'archival-research/record-room-03.jpg', alt: 'Bundles of archival files', caption: 'Archival files', orientation: 'landscape' },
+          { src: 'archival-research/record-room-01.jpg', alt: 'Team members in masks, gloves and hairnets among shelves of bundled files in a dimly lit record room', caption: 'Working among bundled files in the record room', orientation: 'landscape' },
+          { src: 'archival-research/record-room-02.jpg', alt: 'A researcher in a mask and nitrile gloves reaching for bundled files on metal shelving, with a colleague working further down the aisle', caption: 'Locating files on the record-room shelves', orientation: 'landscape' },
+          { src: 'archival-research/record-room-03.jpg', alt: 'A researcher in a hairnet, mask, apron and gloves lifting a stack of brittle files between crowded shelves', caption: 'Handling a bundle of files in the record room', orientation: 'landscape' },
         ],
       },
       {
@@ -155,8 +155,8 @@ export const projects: Project[] = [
       'A collaborative archival digitisation and research initiative documenting historical Poona Public Works Department records. The project investigates colonial construction practices, administrative procedures, and the ground-level realities of architectural production.',
     cover: {
       src: 'eap1678/cover.jpg',
-      alt: 'Large-format architectural drawings from the Poona PWD records being prepared for digitisation',
-      caption: 'Poona PWD records — preparation for digitisation',
+      alt: 'Bound volumes laid out on a stone ledge beside a soft brush: a University of Poona Handbook, the Bombay Public Works Department Manual Vol. II, Journals of the University of Poona, and two volumes on the uniform system of maintaining PWD records (Sind, 1926–27; Southern Circle, Bombay, 1954–55)',
+      caption: 'Volumes laid out during preparatory work, with a soft brush',
       orientation: 'landscape',
     },
     context: [
@@ -245,14 +245,12 @@ export const projects: Project[] = [
         id: 'documentation',
         title: 'Visual Documentation',
         gallery: [
-          { src: 'eap1678/scanner-01.jpg', alt: 'Large-format scanner', caption: 'Large-format scanner', orientation: 'landscape' },
+          { src: 'eap1678/books-journals-01.jpg', alt: 'Worn cover reading “Government of India, Public Works Department. Forms referred to in the Code of Regulations for the Public Works Department. Fifth Edition … Part I. Calcutta, 1906”', caption: 'Forms referred to in the Code of Regulations for the Public Works Department, 5th ed., Part I (Calcutta, 1906)', orientation: 'portrait' },
+          { src: 'eap1678/books-journals-02.jpg', alt: 'A gloved hand holding a worn green volume: “Egyptian Government. Ministry of Public Works Annual Report for 1920–1921. Government Press, Cairo, 1923”', caption: 'Ministry of Public Works, Egyptian Government, Annual Report for 1920–1921 (Cairo, 1923)', orientation: 'portrait' },
           { src: 'eap1678/workstation-01.jpg', alt: 'A camera on a copy stand between two lights above a digitisation table with a laptop, as three team members prepare material', caption: 'Camera-based digitisation workstation', orientation: 'landscape' },
-          { src: 'eap1678/drawing-01.jpg', alt: 'Archival drawing from the Poona PWD records', caption: 'Archival drawing', ref: 'EAP1678/—', orientation: 'landscape' },
-          { src: 'eap1678/books-journals-01.jpg', alt: 'PWD books and journals', caption: 'Books and journals', orientation: 'portrait' },
-          { src: 'eap1678/preservation-materials-01.jpg', alt: 'Preservation materials', caption: 'Preservation materials', orientation: 'landscape' },
+          { src: 'eap1678/qc-colour-target-01.jpg', alt: 'Laptop screen showing the digitised title page of Public Works Department Code, Volume VI, Tables of Salaries, beside a Tiffen colour control patch strip; file name PWDC_049_0001.JPG', caption: 'Image check on screen: Public Works Department Code, Vol. VI, Tables of Salaries (Calcutta, 1884), captured with a colour control target', ref: 'PWDC_049_0001', orientation: 'portrait' },
+          { src: 'eap1678/qc-colour-target-02.jpg', alt: 'Laptop screen showing the digitised title page of Public Works Department Code, Volume I, General Regulations, beside a colour control patch strip; file name PWDC_055_0029.JPG', caption: 'Public Works Department Code, Vol. I, General Regulations (Calcutta, 1902), captured with a colour control target', ref: 'PWDC_055_0029', orientation: 'portrait' },
           { src: 'eap1678/metadata-example.png', alt: 'Example metadata record', caption: 'Metadata example', orientation: 'landscape' },
-          { src: 'eap1678/file-structure.png', alt: 'Digital file structure', caption: 'Digital file structure', orientation: 'landscape' },
-          { src: 'eap1678/storage-01.jpg', alt: 'Conservation and storage of records', caption: 'Conservation and storage', orientation: 'portrait' },
         ],
       },
     ],

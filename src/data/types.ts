@@ -156,6 +156,8 @@ export interface WritingItem {
   themes: string[];
   projects?: string[];
   links?: LinkItem[];
+  /** Optional photograph shown with the entry. */
+  image?: ImageItem;
   /** Must be confirmed before publishing — shown as an editorial flag. */
   needsConfirmation?: string;
 }
