@@ -28,6 +28,8 @@ so you rarely need to touch anything else.
 | `src/assets/images/…` | All images (photographs, drawings, maps, scans) |
 | `public/documents/CV_Kairavi.pdf` | Downloadable CV |
 
+Image checklist: see [IMAGES.md](IMAGES.md).
+
 Pages: Home · About · Research (+ one page per theme) · Projects (+ one page per project) ·
 Writing & Presentations · Exhibitions · Teaching · Achievements · CV · Contact · Search.
 
